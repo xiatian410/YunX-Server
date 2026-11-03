@@ -1,0 +1,11 @@
+{
+  "对齐": [
+    {"id":"A1","location":"账号页 · .account-row / .platform-row · 390/768/1440px，浅色和深色","problem":"已添加账号与下方平台条目的名称左边缘相差 4px；来源是卡片内边距和 600–839px 的图文间隔不一致。","allowed_properties":["padding","padding-left","padding-right","gap"],"target":"同一宽度下名称左边缘一致；保留单列与原顺序。"}
+  ],
+  "对比": [
+    {"id":"C1","location":"侧栏 · .sidebar nav a.active:hover .nav-icon · 768/1440px，浅色和深色","problem":"通用悬停底色覆盖当前页的选中底色，当前页标记变弱。","allowed_properties":["background"],"target":"悬停时保留选中容器颜色，仅叠加状态层。"},
+    {"id":"C2","location":"账号页与已接入平台 · .mdui-theme-dark img[src=\"/icons/github.png\"] · 全宽度","problem":"原 GitHub 黑色图标在深色容器上辨识度不足。","allowed_properties":["background","border-radius"],"target":"只为原图增加浅色背板，不变更原图字节或尺寸。"}
+  ],
+  "层级": [],
+  "间距": []
+}

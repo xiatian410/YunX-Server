@@ -1,0 +1,18 @@
+{
+  "tool": "impeccable detect",
+  "runs": 1,
+  "exit_code": 2,
+  "findings": [
+    {
+      "antipattern": "overused-font",
+      "name": "Overused font",
+      "description": "Inter, Roboto, Fraunces, Geist, Plus Jakarta Sans, and Space Grotesk are used on so many sites they no longer feel distinctive. Each new wave of AI-generated UIs converges on the same handful of faces. Choose a face that gives your interface personality.",
+      "severity": "warning",
+      "category": "slop",
+      "file": "web/src/style.css",
+      "line": 3,
+      "snippet": "font-family:Roboto"
+    }
+  ],
+  "disposition": "Recorded only. Preserve Android / MD3 font direction per explicit user reference; no further edits."
+}

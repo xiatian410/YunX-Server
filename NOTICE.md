@@ -21,3 +21,5 @@ README 的居中项目头图、徽章、截图、功能、使用、构建、常�
 新增运行依赖：Kotlin / kotlinx.coroutines、OkHttp / Okio、Playwright Core 使用 Apache-2.0；org.json 使用其随包许可。Java、Chromium、Node 和 FFmpeg 由运行环境 / Debian 或基础镜像提供，保留各自许可。provider fat JAR 保留依赖 META-INF 信息；源码构建过程和版本均在仓库公开。
 
 internal/server/motion_photo.go 的 Motion Photo XMP/Exif 容器格式参考同一 YunX-Desktop 提交的 MotionPhotoWriter.kt（AGPL-3.0），以 Go 重写流式封装；原文件 SHA-256 和位置见 provider/UPSTREAM.json 的 references。
+
+网页主题 `web/src/theme.css` 将 CYQawa/YunX 同一固定提交的 `ui/theme/Color.kt` 默认浅/深色角色改写为 MDUI CSS 变量，保留 Copyright (C) 2026 CYQawa / AGPL-3.0 归属。网页导航、字体层级、分组、解析表单和下载卡片依据安卓版源码适配；原文件位置、固定提交链接与 SHA-256 见 [界面来源](docs/design/md3/reference.json)。

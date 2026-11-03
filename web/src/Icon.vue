@@ -17,6 +17,24 @@ import '@mdui/icons/arrow-back.js';
 import '@mdui/icons/error-outline.js';
 import '@mdui/icons/storage.js';
 import '@mdui/icons/shield--outlined.js';
+import '@mdui/icons/link.js';
+import '@mdui/icons/account-circle--outlined.js';
+import '@mdui/icons/account-circle.js';
+import '@mdui/icons/download.js';
+import '@mdui/icons/settings.js';
+import '@mdui/icons/more-vert.js';
+import '@mdui/icons/tune.js';
+import '@mdui/icons/layers--outlined.js';
+import '@mdui/icons/speed.js';
+import '@mdui/icons/restart-alt.js';
+import '@mdui/icons/cleaning-services--outlined.js';
+import '@mdui/icons/palette--outlined.js';
+import '@mdui/icons/badge--outlined.js';
+import '@mdui/icons/lock--outlined.js';
+import '@mdui/icons/chevron-right.js';
+import '@mdui/icons/expand-more.js';
+import '@mdui/icons/edit--outlined.js';
+import '@mdui/icons/delete--outlined.js';
 defineProps<{name:string}>();
 </script>
 <template><component :is="'mdui-icon-'+name" aria-hidden="true" class="app-icon" /></template>

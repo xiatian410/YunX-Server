@@ -1,0 +1,57 @@
+{
+  "repository": "https://github.com/CYQawa/YunX",
+  "commit": "648a16d001d5fc8f61fff75ac5b14d266d44cd12",
+  "license": "AGPL-3.0",
+  "copyright": "Copyright (C) 2026 CYQawa",
+  "user_direction": "统一按安卓版布局适配",
+  "files": [
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/theme/Color.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/theme/Color.kt",
+      "sha256": "334224c2e09d15a4c5e37f257aeb28bc63ca5f4c770911c8c69df084d967ca31"
+    },
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/theme/Type.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/theme/Type.kt",
+      "sha256": "87083d03a8716488b44ee21c2d2dde9b0eeef8437de15bf0ec5fbae746bdeefe"
+    },
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/theme/Theme.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/theme/Theme.kt",
+      "sha256": "6736a66c501f59997a4155173cc570b776e00aa34fa2b0bcb391dd88897f3c53"
+    },
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/theme/WindowLayout.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/theme/WindowLayout.kt",
+      "sha256": "4065229a0391cc1903e8123156cdbd6435448ef97d99c521a1e463128c91b7eb"
+    },
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/MainScreen.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/MainScreen.kt",
+      "sha256": "0673cbe210d362e26919d60d09cf66beb78ef3383b509e6a738ddf7534c516a7"
+    },
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/screens/ResolveScreen.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/screens/ResolveScreen.kt",
+      "sha256": "18df14b93520feca626b535d46d040d3c5b1c6d01a7b26916756a8473543b767"
+    },
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/screens/DownloadScreen.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/screens/DownloadScreen.kt",
+      "sha256": "00d500ae46fa9a59822b0d615773f1bb00e8a0f096bcc1e5c9c0f97f79456e18"
+    },
+    {
+      "path": "app/src/main/kotlin/com/yunx/app/ui/screens/SettingsScreen.kt",
+      "url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/kotlin/com/yunx/app/ui/screens/SettingsScreen.kt",
+      "sha256": "17f850bfbed5b04957499b1ce77b198445cdb2dcc1cdf35e86d713eed0248263"
+    }
+  ],
+  "default_color_roles_verified": 70,
+  "adaptation": {
+    "navigation": "解析 / 账号 / 下载 / 设置；80px 侧栏或底部导航",
+    "wide_rule": "width >= 600 || (height < 480 && width > height)",
+    "groups": "16px outer radius / 2px inner radius / 3px gap",
+    "type": "28px headline / 16px title / 14px body / 12px label",
+    "web_only": "管理员登录、NAS 目录、Cookie/Token、种子和任务筛选保留；不伪造容量或原生登录窗口"
+  }
+}

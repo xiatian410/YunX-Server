@@ -1,0 +1,9 @@
+
+/* Taste A1: align existing account and platform text starts. */
+.account-row{padding:16px}
+@media(min-width:600px) and (max-width:839px){.platform-row{gap:16px}}
+@media(max-width:599px){.platform-row{padding-left:16px;padding-right:16px}}
+/* Taste C1: keep the selected container during hover. */
+.sidebar nav a.active:hover .nav-icon{background:color-mix(in srgb,rgb(var(--mdui-color-on-secondary-container)) 10%,rgb(var(--mdui-color-secondary-container)))}
+/* Taste C2: original GitHub PNG, unchanged dimensions and bytes. */
+.mdui-theme-dark img[src="/icons/github.png"]{background:rgb(var(--mdui-color-on-surface));border-radius:50%}

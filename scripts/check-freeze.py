@@ -36,6 +36,12 @@ if 'css_base' in manifest:
     assert actual == original + suffix, 'Unreviewed CSS change beyond the increment'
 else:
     original = actual
+# A user-authorized layout generation preserves the initial CSS as a frozen snapshot.
+# Validate both the current draft + named refinement and the original baseline.
+if 'initial_css_snapshot' in manifest:
+    snapshot = manifest['initial_css_snapshot']
+    assert snapshot in manifest['files'], 'Initial CSS snapshot must itself be frozen'
+    original = (root / snapshot).read_bytes()
 css = (root / f"docs/design/candidate-{initial['selected']}.css").read_bytes()
 assert original.endswith(css), 'Initial selected refinement changed'
 assert sha(original[:-len(css)]) == base['web/src/style.css'], 'Initial CSS baseline changed'
