@@ -1,0 +1,24 @@
+{
+  "version": "0.1.0-draft",
+  "selected": "A",
+  "frozen_at": "2026-11-03",
+  "scope": "frontend source and embedded assets",
+  "files": {
+    "web/src/App.vue": "071713e77c60f1a22d8adf74d74706fd772da8d8eefa3b3b6efdcba336098b7c",
+    "web/src/main.ts": "d67668eade556c123e0174c54169355d599a8c8084d2b92dd938494a32636b30",
+    "web/src/messages.ts": "f99cc2392b6e2ad987c6bb3328ccf2e64d9a5c1f78ffee57468b1410fe1f220b",
+    "web/src/Icon.vue": "12f894e038ad15a3619cfbae1ce05c53d82ce78ca924be146e963a55f10d5467",
+    "web/src/style.css": "092cfbebf4530216e6b37162394153c82b0158fa7a5e32a05ff0557d5a8969ba",
+    "web/src/api.ts": "4ddd0ce2d4425b0718eb87d9a534f46e8bb3c85302e5c809dcb8b1b3994c99c5",
+    "web/index.html": "83a5374e7288b7e3eb9d5aee504911d3e1a13100d5e5d48ddca6d30c667407e7",
+    "web/vite.config.ts": "a9d77647fd43c8d11d6dcbcc5b39f308cbbad79ec0e0a9904335a5c0737a0409",
+    "web/package.json": "981c7d0a30860445a3497948ef4df7045aeb7684fb1460c70fbd2a6df3cd90f3",
+    "web/package-lock.json": "9ce52b70f02dbecf826d888aee78e64c7ebb4494565b20b86eb9677d40b61542",
+    "web/public/favicon.svg": "02dd40efa8e33872af9211ee27b0dc30587f3bd584867d1e0ae78eb3590c9379",
+    "docs/design/candidate-A.css": "fd4ab92b46d3d1a7e80614d64b397524341beec4154530badbe630c7bca0e90a",
+    "internal/webassets/dist/index.html": "81652fddc9cec75b541be315604594aba24ecea6d1427ecce294f8dfa7a612c7",
+    "internal/webassets/dist/favicon.svg": "02dd40efa8e33872af9211ee27b0dc30587f3bd584867d1e0ae78eb3590c9379",
+    "internal/webassets/dist/assets/index-BHwJmV6_.css": "e1cc69ccd5bb6df94f0ae59b4498cdaadca666c4730afe47455e7d51bfe1eecb",
+    "internal/webassets/dist/assets/index-D7W9L90X.js": "8ec63745fc06dee8744ff70b0afcfb68aab13ed195e7337c6978008b311346ff"
+  }
+}

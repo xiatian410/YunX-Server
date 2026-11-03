@@ -1,0 +1,9 @@
+/* Impeccable candidate C; reviewed locations only. */
+@media (min-width:768px) {
+ .table-head > span:first-of-type { padding-left:33px; }
+}
+.task-panel, .task-row, .activity, .settings-section {
+ border-color:color-mix(in srgb, rgb(var(--mdui-color-outline-variant)) 65%, rgb(var(--mdui-color-surface)));
+}
+.file-meta, .progress-label > .numeric { font-size:12.5px; line-height:16.5px; }
+.settings-fields > mdui-text-field[helper]::part(container) { height:auto; }

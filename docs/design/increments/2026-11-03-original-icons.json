@@ -1,0 +1,80 @@
+{
+  "id": "2026-11-03-original-icons",
+  "reason": "User requested upstream YunX icons; retain frozen layout.",
+  "parent_manifest": "docs/design/freezes/2026-11-03-initial.json",
+  "parent_sha256": "8472c97b3fa564efade6c632e018e4a1012b640e190cae6e338c17787d67a2f9",
+  "changes": {
+    "docs/icon-sources.json": {
+      "before": null,
+      "after": "444f43e368d2570e64926ff2a81b4f0159ead747422be1b1a7043d38020f3022"
+    },
+    "internal/webassets/dist/assets/index-D7W9L90X.js": {
+      "before": "8ec63745fc06dee8744ff70b0afcfb68aab13ed195e7337c6978008b311346ff",
+      "after": null
+    },
+    "internal/webassets/dist/assets/index-U4tOzFl8.js": {
+      "before": null,
+      "after": "f594545ed083c87425fd2ab11ae436adde4dca6e1697ea1ceabf84b43cebac78"
+    },
+    "internal/webassets/dist/favicon.svg": {
+      "before": "02dd40efa8e33872af9211ee27b0dc30587f3bd584867d1e0ae78eb3590c9379",
+      "after": null
+    },
+    "internal/webassets/dist/icons/bilibili.png": {
+      "before": null,
+      "after": "f7b48f8bf1732f4ecf6dc75f6cef528ded1dba316b28069205efb1019f112cea"
+    },
+    "internal/webassets/dist/icons/pan123.png": {
+      "before": null,
+      "after": "d52464c63f6b327b52624c28d8eefc6c1793d8d681a3a8b21958e9502cabea3e"
+    },
+    "internal/webassets/dist/icons/quark.png": {
+      "before": null,
+      "after": "1649687dae3a1edeb7c4f3322c6770651559a88a830dcea3f711c5011a72e560"
+    },
+    "internal/webassets/dist/icons/uc.png": {
+      "before": null,
+      "after": "ff15d906e77ef2c5ee0f5b28b820ccf84fa284aa674e995e74718351d6a40f1c"
+    },
+    "internal/webassets/dist/icons/yunx.png": {
+      "before": null,
+      "after": "95e198c64a4e2d9ac7737ef528eb8782f4415fce1ef7e31f695ea73b0b4f7d69"
+    },
+    "internal/webassets/dist/index.html": {
+      "before": "81652fddc9cec75b541be315604594aba24ecea6d1427ecce294f8dfa7a612c7",
+      "after": "857c83c8bbd6d4dd4a059ade49cc7922f31157d601c134e516e82bbcb38f22a2"
+    },
+    "web/index.html": {
+      "before": "83a5374e7288b7e3eb9d5aee504911d3e1a13100d5e5d48ddca6d30c667407e7",
+      "after": "e97b6d81b8f3356cc8393f2cbb63863b80114c2deab292d9753c22d01dd3dd02"
+    },
+    "web/public/favicon.svg": {
+      "before": "02dd40efa8e33872af9211ee27b0dc30587f3bd584867d1e0ae78eb3590c9379",
+      "after": null
+    },
+    "web/public/icons/bilibili.png": {
+      "before": null,
+      "after": "f7b48f8bf1732f4ecf6dc75f6cef528ded1dba316b28069205efb1019f112cea"
+    },
+    "web/public/icons/pan123.png": {
+      "before": null,
+      "after": "d52464c63f6b327b52624c28d8eefc6c1793d8d681a3a8b21958e9502cabea3e"
+    },
+    "web/public/icons/quark.png": {
+      "before": null,
+      "after": "1649687dae3a1edeb7c4f3322c6770651559a88a830dcea3f711c5011a72e560"
+    },
+    "web/public/icons/uc.png": {
+      "before": null,
+      "after": "ff15d906e77ef2c5ee0f5b28b820ccf84fa284aa674e995e74718351d6a40f1c"
+    },
+    "web/public/icons/yunx.png": {
+      "before": null,
+      "after": "95e198c64a4e2d9ac7737ef528eb8782f4415fce1ef7e31f695ea73b0b4f7d69"
+    },
+    "web/src/App.vue": {
+      "before": "071713e77c60f1a22d8adf74d74706fd772da8d8eefa3b3b6efdcba336098b7c",
+      "after": "5df6d75b50d5fd1a4a1aebc2e7ad404516b8a952e7246d82aada4cb0c04b7372"
+    }
+  }
+}

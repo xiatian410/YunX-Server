@@ -1,0 +1,32 @@
+{
+  "repository": "https://github.com/CYQawa/YunX",
+  "commit": "648a16d001d5fc8f61fff75ac5b14d266d44cd12",
+  "license": "AGPL-3.0",
+  "files": {
+    "web/public/icons/yunx.png": {
+      "source_url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/res/drawable/icon.png",
+      "source_path": "app/src/main/res/drawable/icon.png",
+      "sha256": "95e198c64a4e2d9ac7737ef528eb8782f4415fce1ef7e31f695ea73b0b4f7d69"
+    },
+    "web/public/icons/quark.png": {
+      "source_url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/res/drawable/logo_quark.png",
+      "source_path": "app/src/main/res/drawable/logo_quark.png",
+      "sha256": "1649687dae3a1edeb7c4f3322c6770651559a88a830dcea3f711c5011a72e560"
+    },
+    "web/public/icons/uc.png": {
+      "source_url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/res/drawable/logo_uc.png",
+      "source_path": "app/src/main/res/drawable/logo_uc.png",
+      "sha256": "ff15d906e77ef2c5ee0f5b28b820ccf84fa284aa674e995e74718351d6a40f1c"
+    },
+    "web/public/icons/pan123.png": {
+      "source_url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/res/drawable/logo_123pan.png",
+      "source_path": "app/src/main/res/drawable/logo_123pan.png",
+      "sha256": "d52464c63f6b327b52624c28d8eefc6c1793d8d681a3a8b21958e9502cabea3e"
+    },
+    "web/public/icons/bilibili.png": {
+      "source_url": "https://github.com/CYQawa/YunX/blob/648a16d001d5fc8f61fff75ac5b14d266d44cd12/app/src/main/res/drawable/logo_bilibili.png",
+      "source_path": "app/src/main/res/drawable/logo_bilibili.png",
+      "sha256": "f7b48f8bf1732f4ecf6dc75f6cef528ded1dba316b28069205efb1019f112cea"
+    }
+  }
+}

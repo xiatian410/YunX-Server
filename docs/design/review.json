@@ -1,0 +1,71 @@
+{
+  "skill": "design-taste-frontend",
+  "phase": "review-only",
+  "source": "web/src/style.css",
+  "issues": [
+    {
+      "id": "A1",
+      "category": "对齐",
+      "route": "downloads",
+      "widths": [
+        768,
+        1440
+      ],
+      "selector": ".table-head > span:first-of-type",
+      "properties": [
+        "padding-left"
+      ],
+      "finding": "文件名表头比正文文件名左移 33px。",
+      "target": "文本起点相差不超过 1px；不改变列宽。"
+    },
+    {
+      "id": "C1",
+      "category": "对比",
+      "route": "downloads,settings",
+      "widths": [
+        390,
+        768,
+        1440
+      ],
+      "selector": ".task-panel, .task-row, .activity, .settings-section",
+      "properties": [
+        "border-color"
+      ],
+      "finding": "浅色模式列表与面板边线对背景为 1.65:1，重复边线分散文字注意力。",
+      "target": "边线保持可见，将浅色边线对背景控制在 1.2–1.5:1；保留文字与状态色。"
+    },
+    {
+      "id": "H1",
+      "category": "层级",
+      "route": "downloads",
+      "widths": [
+        390,
+        768,
+        1440
+      ],
+      "selector": ".file-meta, .progress-label > .numeric",
+      "properties": [
+        "font-size",
+        "line-height"
+      ],
+      "finding": "来源/路径和进度数值为 11px，小于其他同行状态文字。",
+      "target": "字体至少 12px，保留 16.5px 行高与行结构。"
+    },
+    {
+      "id": "S1",
+      "category": "间距",
+      "route": "settings",
+      "widths": [
+        390,
+        768,
+        1440
+      ],
+      "selector": ".settings-fields > mdui-text-field[helper]::part(container)",
+      "properties": [
+        "height"
+      ],
+      "finding": "MDUI 内部 container 的 height:100% 占满含 helper 的宿主高度，帮助文字挤入下个字段。",
+      "target": "帮助文字落在宿主边界内，不与下一字段交叠。"
+    }
+  ]
+}

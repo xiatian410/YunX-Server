@@ -1,0 +1,9 @@
+{
+  "web/src/App.vue": "071713e77c60f1a22d8adf74d74706fd772da8d8eefa3b3b6efdcba336098b7c",
+  "web/src/style.css": "6431f85d6fc5790e548ef7f790d09f2622ddb9459cc7410c1884ae2488031442",
+  "web/src/main.ts": "d67668eade556c123e0174c54169355d599a8c8084d2b92dd938494a32636b30",
+  "web/src/api.ts": "4ddd0ce2d4425b0718eb87d9a534f46e8bb3c85302e5c809dcb8b1b3994c99c5",
+  "web/src/messages.ts": "f99cc2392b6e2ad987c6bb3328ccf2e64d9a5c1f78ffee57468b1410fe1f220b",
+  "web/src/Icon.vue": "12f894e038ad15a3619cfbae1ce05c53d82ce78ca924be146e963a55f10d5467",
+  "web/vite.config.ts": "a9d77647fd43c8d11d6dcbcc5b39f308cbbad79ec0e0a9904335a5c0737a0409"
+}

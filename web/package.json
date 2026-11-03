@@ -1,0 +1,24 @@
+{
+  "name": "yunx-server-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "vue-tsc --noEmit",
+    "build": "vue-tsc --noEmit && vite build",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "vue": "3.5.44",
+    "mdui": "2.1.5",
+    "@mdui/icons": "1.0.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.10",
+    "vite": "8.3.5",
+    "typescript": "6.0.3",
+    "vue-tsc": "3.3.14",
+    "@playwright/test": "1.64.1"
+  }
+}

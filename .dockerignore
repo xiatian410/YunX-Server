@@ -1,0 +1,10 @@
+.git
+.work
+release
+data
+downloads
+web/node_modules
+web/test-results
+web/playwright-report
+.env
+**/*.log

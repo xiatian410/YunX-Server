@@ -1,0 +1,74 @@
+{
+  "views_compared": 24,
+  "routes": [
+    "downloads",
+    "resolve",
+    "accounts",
+    "settings"
+  ],
+  "widths": [
+    390,
+    768,
+    1440
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "geometry_changes": 0,
+  "structure_changes_outside_platform_mark": 0,
+  "overflow": 0,
+  "page_errors": 0,
+  "all_images_loaded": true,
+  "css_unchanged": true,
+  "login_and_all_platform_states": [
+    {
+      "width": 390,
+      "theme": "light",
+      "login": true,
+      "favicon": true,
+      "platform_icons": 4,
+      "errors": 0
+    },
+    {
+      "width": 768,
+      "theme": "light",
+      "login": true,
+      "favicon": true,
+      "platform_icons": 4,
+      "errors": 0
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "login": true,
+      "favicon": true,
+      "platform_icons": 4,
+      "errors": 0
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "login": true,
+      "favicon": true,
+      "platform_icons": 4,
+      "errors": 0
+    },
+    {
+      "width": 768,
+      "theme": "dark",
+      "login": true,
+      "favicon": true,
+      "platform_icons": 4,
+      "errors": 0
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "login": true,
+      "favicon": true,
+      "platform_icons": 4,
+      "errors": 0
+    }
+  ]
+}

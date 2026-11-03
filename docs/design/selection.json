@@ -1,0 +1,69 @@
+{
+  "selected": "A",
+  "reason": "四类问题全部修复；DOM、列宽规则和次序不变；已修复候选中自然文字换行造成的流式高度变化最少。",
+  "comparison": [
+    {
+      "label": "A",
+      "captures": 24,
+      "domMismatches": 0,
+      "gridOrOrderChanges": 0,
+      "totalOuterFlowDelta": 132,
+      "maxOuterFlowDelta": 16.5,
+      "changedOuterRects": 8,
+      "alignmentPass": true,
+      "helpersPass": true,
+      "minMetaFont": 12,
+      "overflow": 0,
+      "consoleErrors": 0,
+      "remainingReviewedWarnings": 0,
+      "functional": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      },
+      "repairComplete": true
+    },
+    {
+      "label": "B",
+      "captures": 24,
+      "domMismatches": 0,
+      "gridOrOrderChanges": 0,
+      "totalOuterFlowDelta": 132,
+      "maxOuterFlowDelta": 16.5,
+      "changedOuterRects": 8,
+      "alignmentPass": true,
+      "helpersPass": true,
+      "minMetaFont": 12,
+      "overflow": 0,
+      "consoleErrors": 0,
+      "remainingReviewedWarnings": 6,
+      "functional": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      },
+      "repairComplete": false
+    },
+    {
+      "label": "C",
+      "captures": 24,
+      "domMismatches": 0,
+      "gridOrOrderChanges": 0,
+      "totalOuterFlowDelta": 198,
+      "maxOuterFlowDelta": 33,
+      "changedOuterRects": 8,
+      "alignmentPass": true,
+      "helpersPass": true,
+      "minMetaFont": 12.5,
+      "overflow": 0,
+      "consoleErrors": 0,
+      "remainingReviewedWarnings": 0,
+      "functional": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      },
+      "repairComplete": true
+    }
+  ]
+}
