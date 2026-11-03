@@ -1,7 +1,6 @@
 services:
   yunx:
-    build: .
-    image: yunx-server:local
+    image: "${YUNX_IMAGE:-ghcr.io/xiatian410/yunx-server:0.2.0-preview.1}"
     user: "${PUID:-1000}:${PGID:-1000}"
     ports:
       - "${BIND_IP:-0.0.0.0}:${PORT:-8080}:8080"

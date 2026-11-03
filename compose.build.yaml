@@ -1,0 +1,6 @@
+# Optional source-build override. Normal deployments only need compose.yaml.
+services:
+  yunx:
+    image: yunx-server:local
+    build: .
+    pull_policy: build

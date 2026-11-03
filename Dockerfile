@@ -16,15 +16,24 @@ RUN ./gradlew --no-daemon test fatJar
 FROM golang:1.26-bookworm AS server
 ARG TARGETOS=linux
 ARG TARGETARCH
+ARG VERSION=0.2.0-draft
 WORKDIR /src
 COPY go.mod go.sum ./
 RUN go mod download
 COPY cmd/ cmd/
 COPY internal/ internal/
 COPY --from=web /src/internal/webassets/dist/ internal/webassets/dist/
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags="-s -w" -o /out/yunx-server ./cmd/yunx-server
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags="-s -w -X main.version=$VERSION" -o /out/yunx-server ./cmd/yunx-server
 
 FROM node:22-bookworm-slim
+ARG VERSION=0.2.0-draft
+ARG VCS_REF=unknown
+LABEL org.opencontainers.image.title="YunX Server" \
+      org.opencontainers.image.description="YunX NAS server with the Android MD3 web interface" \
+      org.opencontainers.image.source="https://github.com/xiatian410/YunX-Server" \
+      org.opencontainers.image.licenses="AGPL-3.0" \
+      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.revision=$VCS_REF
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openjdk-17-jre-headless chromium ffmpeg curl && rm -rf /var/lib/apt/lists/* && mkdir /data /downloads /opt/yunx && chown node:node /data /downloads /opt/yunx
 COPY --from=server /out/yunx-server /usr/local/bin/yunx-server
 COPY --from=provider /src/provider/build/libs/yunx-provider.jar /opt/yunx/provider.jar
