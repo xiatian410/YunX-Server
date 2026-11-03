@@ -46,7 +46,7 @@ with tempfile.TemporaryDirectory(prefix='yunx-smoke-') as tmp:
             assert json.load(response)['ok']
         with opener.open(base+'/api/state') as response:
             state=json.load(response)
-            assert state['tasks']==[] and len(state['platforms'])==4
+            assert state['tasks']==[] and len(state['platforms'])==(5 if env.get('YUNX_PROVIDER_JAR')=='disabled' else 18)
         with opener.open(base+'/') as response:
             assert response.headers.get_content_type()=='text/html'
             html=response.read().decode()
@@ -61,7 +61,9 @@ with tempfile.TemporaryDirectory(prefix='yunx-smoke-') as tmp:
                 assert response.status==200 and len(content)>100
                 if expected.exists():
                     assert hashlib.sha256(content).digest()==hashlib.sha256((expected/asset.lstrip('/')).read_bytes()).digest(), 'Embedded asset hash differs'
-        for icon in ['yunx','quark','uc','pan123','bilibili']:
+        icons=sorted(p.stem for p in (expected/'icons').glob('*.png'))
+        assert len(icons)==19
+        for icon in icons:
             asset=f'/icons/{icon}.png'
             with opener.open(base+asset) as response:
                 assert response.headers.get_content_type()=='image/png'
@@ -69,7 +71,7 @@ with tempfile.TemporaryDirectory(prefix='yunx-smoke-') as tmp:
                 assert content.startswith(b'\x89PNG\r\n\x1a\n')
                 assert content==(expected/asset.lstrip('/')).read_bytes(), 'Embedded icon differs from original'
         assert 'href="/icons/yunx.png"' in html
-        print(json.dumps({'binary':Path(binary).name,'runner':runner,'health':True,'auth':True,'embedded_assets':len(assets),'favicon_mime':True,'embedded_hash_match':expected.exists()}))
+        print(json.dumps({'binary':Path(binary).name,'runner':runner,'health':True,'auth':True,'embedded_assets':len(assets),'embedded_icons':len(icons),'platforms':len(state['platforms']),'favicon_mime':True,'embedded_hash_match':expected.exists()}))
     finally:
         proc.send_signal(signal.SIGTERM)
         try:

@@ -15,3 +15,5 @@ Operate 模式：在 NAS 上完成解析、选择文件、下载和账号维护�
 后续改动必须作为增量任务说明位置和原因，重新检查所影响状态。不要重新生成整页、重排信息架构或覆盖冻结记录。冻结守卫由 `scripts/check-freeze.py` 检查。新增发现只记录在 `docs/design/next-iteration.md`，本轮不顺带修复。
 
 2026-11-03：用户指定复用原项目图标。仅更新登录页、侧栏、网页图标及账号列表已有图标位置；保留初次冻结快照，更新现行清单。来源见 `docs/icon-sources.md`，增量记录见 `docs/design/increments/2026-11-03-original-icons.md`。
+
+2026-11-03：平台移植增量保留四路由、网格和导航。新增功能控件完成后，Taste 仅点名 `.resolve-extras` 和 `.supported-platforms` 的间距，Impeccable 只修改这两处 margin-top。三版各 36 张截图，DOM 同构，无横向溢出；按结构稳定、2/2 修复和最小位移选择 A，现行清单已冻结。弹窗事件冒泡与 SSE 状态覆盖分别作为独立功能修复记录，未修改版式。新发现 D1 仅记录到下一轮。详见 `docs/design/parity/`。

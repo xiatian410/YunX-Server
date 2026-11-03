@@ -218,6 +218,9 @@ type Item struct {
 	Extra     map[string]string `json:"extra,omitempty"`
 }
 type ParseSession struct {
+	Qualities []Quality         `json:"qualities,omitempty"`
+	Quality   int               `json:"quality,omitempty"`
+	Notice    string            `json:"notice,omitempty"`
 	ID        string            `json:"id"`
 	Platform  string            `json:"platform"`
 	Title     string            `json:"title"`
@@ -232,6 +235,8 @@ type ParseSession struct {
 	Cursors   map[string]string `json:"cursors,omitempty"`
 }
 type MediaSource struct {
+	Kind         string            `json:"kind,omitempty"`
+	Cleanup      string            `json:"cleanup,omitempty"`
 	URL          string            `json:"url"`
 	Headers      map[string]string `json:"headers,omitempty"`
 	Size         int64             `json:"size"`

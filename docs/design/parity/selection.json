@@ -1,0 +1,41 @@
+{
+  "selected": "A",
+  "criteria": [
+    "structure stability",
+    "complete fixes at named positions",
+    "smallest local displacement"
+  ],
+  "runs": [
+    {
+      "candidate": "A",
+      "captures": 36,
+      "structure_stable": true,
+      "named_fixes": "2/2",
+      "horizontal_overflow": 0,
+      "console_errors": 0,
+      "added_vertical_space": 24
+    },
+    {
+      "candidate": "B",
+      "captures": 36,
+      "structure_stable": true,
+      "named_fixes": "2/2",
+      "horizontal_overflow": 0,
+      "console_errors": 0,
+      "added_vertical_space": 28
+    },
+    {
+      "candidate": "C",
+      "captures": 36,
+      "structure_stable": true,
+      "named_fixes": "2/2",
+      "horizontal_overflow": 0,
+      "console_errors": 0,
+      "added_vertical_space": 32
+    }
+  ],
+  "reason": "All candidates preserve the same DOM and fix S1/S2; A adds the least vertical space. No grid, navigation or DOM order changes.",
+  "new_issues_deferred": [
+    "D1: helper text in the mobile account dialog may exceed the MDUI field height; recorded without a styling fix in this pass."
+  ]
+}

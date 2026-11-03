@@ -1,7 +1,7 @@
 .work/
-data/
-downloads/
-release/
+/data/
+/downloads/
+/release/
 /yunx-server
 web/node_modules/
 web/dist/
@@ -13,3 +13,8 @@ internal/webassets/dist/*
 *.log
 __pycache__/
 *.pyc
+provider/.gradle/
+provider/.kotlin/
+provider/build/
+provider/node_modules/
+.torrent.bolt.db

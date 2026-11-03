@@ -7,6 +7,13 @@ export interface Task {id:string;name:string;platform:string;account_id?:string;
 export interface Account {id:string;name:string;platform:string;status:string;nickname?:string;checked_at?:string;message?:string}
 export interface Settings {name:string;concurrency:number;connections:number;speed_limit:number;default_dir:string;resume_on_restart:boolean;theme:string}
 export interface Platform {id:string;name:string;credential:string;cloud:boolean}
-export interface State {tasks:Task[];accounts:Account[];platforms:Platform[];settings:Settings;disk:{available:number|null;total:number|null};events:{id:number;task_id:string;kind:string;message:string;created_at:string}[];version:string;updated_at:string;root:string}
+export interface CredentialField {key:string;name:string;help:string}
+export interface State {credential_fields?:Record<string,CredentialField[]>;tasks:Task[];accounts:Account[];platforms:Platform[];settings:Settings;disk:{available:number|null;total:number|null};events:{id:number;task_id:string;kind:string;message:string;created_at:string}[];version:string;updated_at:string;root:string}
 export interface FileItem {id:string;name:string;size:number;directory:boolean}
-export interface Browse {session_id:string;platform:string;title:string;items:FileItem[];parent:string;page:number;more:boolean}
+export interface Browse {qualities?:{id:number;name:string}[];quality?:number;notice?:string;session_id:string;platform:string;title:string;items:FileItem[];parent:string;page:number;more:boolean}
+
+export async function uploadTorrent(file:File):Promise<Browse>{
+ if(file.size>2*1024*1024)throw new Error('种子文件不能超过 2 MiB');
+ const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),90_000);
+ try{const r=await fetch('/api/torrents',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/x-bittorrent','X-YunX-Request':'1'},body:file,signal:controller.signal});const j=await r.json();if(!r.ok)throw new APIError(j.error?.code||'torrent',j.error?.message||'种子导入失败',r.status);return j;}finally{clearTimeout(timeout)}
+}

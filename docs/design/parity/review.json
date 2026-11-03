@@ -1,0 +1,11 @@
+{
+  "skill": "design-taste-frontend",
+  "phase": "review-only",
+  "对齐": [],
+  "对比": [],
+  "层级": [],
+  "间距": [
+    {"id":"S1","location":"链接解析 · .resolve-extras · 390/768/1440px，浅色和深色","problem":"导入种子按钮紧接上一段支持说明，两组控件缺少纵向分隔。","allowed_properties":["margin-top"],"target":"组间增加至少 12px 间距，不改变父容器和行内排列。"},
+    {"id":"S2","location":"链接解析 · .supported-platforms · 390/768/1440px，浅色和深色","problem":"已接入平台折叠标题紧接种子大小说明，两个独立入口边界不明确。","allowed_properties":["margin-top"],"target":"折叠标题上方增加至少 12px 间距，不移动已有表单字段。"}
+  ]
+}

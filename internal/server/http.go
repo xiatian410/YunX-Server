@@ -23,6 +23,7 @@ import (
 )
 
 type Config struct {
+	ProviderJar, BrowserScript                     string
 	DataDir, DownloadDir, AdminPassword, PublicURL string
 	AllowPrivate                                   bool
 	Assets                                         fs.FS
@@ -87,9 +88,34 @@ func NewApp(c Config, baseURL string) (*App, error) {
 			}
 		}
 	}
+	if c.ProviderJar != "" {
+		var device struct {
+			ID string `json:"id"`
+		}
+		ok, err := s.Get("config", "provider_device", &device)
+		if err != nil {
+			s.DB.Close()
+			return nil, err
+		}
+		if !ok {
+			device.ID = randomID()
+			if err = s.Put("config", "provider_device", device); err != nil {
+				s.DB.Close()
+				return nil, err
+			}
+		}
+		a.Providers.Bridge, e = StartProvider(c.ProviderJar, device.ID, c.BrowserScript, c.AllowPrivate)
+		if e != nil {
+			s.DB.Close()
+			return nil, e
+		}
+	}
 	a.password = auth.Hash
 	a.Manager, e = NewManager(s, a.Providers, c.DownloadDir, baseURL)
 	if e != nil {
+		if a.Providers.Bridge != nil {
+			a.Providers.Bridge.Close()
+		}
 		s.DB.Close()
 		return nil, e
 	}
@@ -97,6 +123,9 @@ func NewApp(c Config, baseURL string) (*App, error) {
 	return a, nil
 }
 func (a *App) Close() error {
+	if a.Providers.Bridge != nil {
+		defer a.Providers.Bridge.Close()
+	}
 	e := a.Manager.Close()
 	if e2 := a.Store.DB.Close(); e == nil {
 		e = e2
@@ -177,6 +206,9 @@ func (a *App) routes() http.Handler {
 		return nil
 	})
 	api("POST /api/auth/password", a.changePassword)
+	api("POST /api/torrents", a.importTorrent)
+	api("POST /api/quality", a.changeQuality)
+	api("POST /api/cleanup", a.retryCleanup)
 	api("GET /api/state", func(w http.ResponseWriter, r *http.Request) error {
 		v, e := a.state()
 		if e != nil {
@@ -388,7 +420,7 @@ func (a *App) state() (map[string]any, error) {
 		disk["available"] = stat.Bavail * uint64(stat.Bsize)
 		disk["total"] = stat.Blocks * uint64(stat.Bsize)
 	}
-	return map[string]any{"tasks": a.Manager.Snapshot(), "accounts": accounts, "settings": s, "platforms": Platforms, "events": events, "disk": disk, "version": a.Config.Version, "root": "/downloads", "updated_at": now()}, nil
+	return map[string]any{"tasks": a.Manager.Snapshot(), "accounts": accounts, "settings": s, "platforms": a.Providers.Platforms(), "credential_fields": credentialFields, "events": events, "disk": disk, "version": a.Config.Version, "root": "/downloads", "updated_at": now()}, nil
 }
 func (a *App) events(w http.ResponseWriter, r *http.Request) error {
 	flusher, ok := w.(http.Flusher)
@@ -445,17 +477,18 @@ func (a *App) events(w http.ResponseWriter, r *http.Request) error {
 }
 func (a *App) saveAccount(w http.ResponseWriter, r *http.Request) error {
 	var b struct {
-		ID         string `json:"id"`
-		Platform   string `json:"platform"`
-		Name       string `json:"name"`
-		Credential string `json:"credential"`
+		ID          string            `json:"id"`
+		Platform    string            `json:"platform"`
+		Name        string            `json:"name"`
+		Credential  string            `json:"credential"`
+		Credentials map[string]string `json:"credentials"`
 	}
 	if e := readJSON(r, &b); e != nil {
 		return e
 	}
 	valid := false
 	key := "cookie"
-	for _, p := range Platforms {
+	for _, p := range a.Providers.Platforms() {
 		if p.ID == b.Platform {
 			valid = true
 			key = p.Credential
@@ -494,6 +527,23 @@ func (a *App) saveAccount(w http.ResponseWriter, r *http.Request) error {
 		account.Status = "unchecked"
 		account.Message = ""
 		account.CheckedAt = ""
+	}
+	for field, value := range b.Credentials {
+		allowed := false
+		for _, definition := range credentialFields[b.Platform] {
+			if definition.Key == field {
+				allowed = true
+			}
+		}
+		if !allowed || len(value) > 65536 || strings.ContainsAny(value, "\r\n") {
+			return fail("invalid_credential", "凭据字段或格式无效")
+		}
+		if value != "" {
+			account.Credentials[field] = value
+			account.Status = "unchecked"
+			account.Message = ""
+			account.CheckedAt = ""
+		}
 	}
 	if account.Credentials[key] == "" {
 		return fail("credential_required", "请填写平台登录凭据")
@@ -568,7 +618,7 @@ func (a *App) resolve(w http.ResponseWriter, r *http.Request) error {
 	if len(b.Text) > 8192 {
 		return fail("input_length", "链接内容过长")
 	}
-	ctx, cancel := context.WithTimeout(r.Context(), 45*time.Second)
+	ctx, cancel := context.WithTimeout(r.Context(), 90*time.Second)
 	defer cancel()
 	s, e := a.Providers.Resolve(ctx, b.Text, b.Password, b.AccountID, b.Cloud)
 	if e != nil {
@@ -804,11 +854,22 @@ func (a *App) file(w http.ResponseWriter, r *http.Request) error {
 	}
 	defer f.Close()
 	info, e := f.Stat()
+	if e == nil && info.IsDir() {
+		return serveTaskDirectory(w, r, root, name)
+	}
 	if e != nil || !info.Mode().IsRegular() {
 		return fail("file_missing", "目标不是普通文件")
 	}
 	w.Header().Set("Content-Type", "application/octet-stream")
-	w.Header().Set("Content-Disposition", "attachment; filename*=UTF-8''"+url.PathEscape(name))
+	disposition := "attachment"
+	if r.URL.Query().Get("preview") == "1" {
+		kind := mime.TypeByExtension(strings.ToLower(filepath.Ext(name)))
+		if (strings.HasPrefix(kind, "image/") && kind != "image/svg+xml") || strings.HasPrefix(kind, "video/") || strings.HasPrefix(kind, "audio/") {
+			w.Header().Set("Content-Type", kind)
+			disposition = "inline"
+		}
+	}
+	w.Header().Set("Content-Disposition", disposition+"; filename*=UTF-8''"+url.PathEscape(name))
 	http.ServeContent(w, r, name, info.ModTime(), f)
 	return nil
 }

@@ -19,6 +19,6 @@ services:
       - ALL
     read_only: true
     tmpfs:
-      - /tmp:size=64m,mode=1777
-    mem_limit: 768m
-    pids_limit: 128
+      - /tmp:size=256m,mode=1777
+    mem_limit: 1536m
+    pids_limit: 256

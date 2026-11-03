@@ -1,0 +1,7 @@
+{
+  "kind": "separate-functional-fix",
+  "cause": "An older /state response could arrive after the SSE completion event and overwrite completed with downloading.",
+  "location": "web/src/App.vue: refresh/connect",
+  "change": "Ignore a state response if a newer SSE event was applied after that request began. No additional requests, delays, retries, or CSS changes.",
+  "verification": "Browser test deliberately delivers a stale state response after the real SSE completion event."
+}

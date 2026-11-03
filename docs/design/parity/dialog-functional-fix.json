@@ -1,0 +1,8 @@
+{
+  "kind": "separate-functional-fix",
+  "cause": "MDUI dropdown closed events bubble into the enclosing dialog closed handler.",
+  "location": "web/src/App.vue: mdui-dialog @closed handlers",
+  "before_sha256": "f7d37273fc7a03c6e3ccc2f5c48774463b9e02eca12c5279ae28c802f4741b13",
+  "change": "Filter each dialog handler with Vue .self. No template order, CSS or geometry changes.",
+  "verification": "Platform selection remains inside the account dialog after the nested dropdown closes; 18-platform account save/edit and quality browser tests."
+}

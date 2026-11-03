@@ -16,3 +16,8 @@
 }
 .file-meta, .progress-label > .numeric { font-size:12px; line-height:16.5px; }
 .settings-fields > mdui-text-field[helper]::part(container) { height:auto; }
+
+/* Platform parity increment: only new controls and preview content. */
+.resolve-extras{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.resolve-extras .helper{margin:0}.supported-platforms summary{cursor:pointer;font-size:13px}.supported-platforms p{line-height:1.7}.quality-field{padding:0 20px 16px;max-width:360px}.parse-notice{padding:0 20px}.preview-link{display:block;max-width:100%;border:0;background:none;padding:0;color:inherit;text-align:left;font:inherit;font-weight:600;cursor:pointer}.preview-link:hover{text-decoration:underline}.media-preview{max-width:720px}.media-preview img,.media-preview video{display:block;max-width:100%;max-height:65vh;margin:auto}.media-preview audio{width:100%}.cleanup-field .helper{margin-bottom:0}
+/* Impeccable S1/S2: only the two positions named by Taste. */
+.resolve-extras{margin-top:12px}.supported-platforms{margin-top:12px}

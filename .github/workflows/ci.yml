@@ -1,0 +1,48 @@
+name: Validate source and container
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: make test check
+      - run: |
+          mkdir -p release
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -o release/yunx-server-amd64 ./cmd/yunx-server
+          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -o release/yunx-server-arm64 ./cmd/yunx-server
+          python3 scripts/smoke-binary.py release/yunx-server-amd64
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t yunx-test .
+      - name: Run full provider image
+        run: |
+          docker run -d --name yunx-test --read-only --tmpfs /tmp:rw,size=256m --tmpfs /data:rw,uid=1000,gid=1000 --tmpfs /downloads:rw,uid=1000,gid=1000 -e YUNX_ADMIN_PASSWORD=test-password-123 -p 127.0.0.1:18080:8080 yunx-test
+          for n in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18080/health; then break; fi
+            sleep 1
+          done
+          curl -fsS -c /tmp/yunx-cookies -H 'Content-Type: application/json' -H 'X-YunX-Request: 1' -d '{"username":"admin","password":"test-password-123"}' http://127.0.0.1:18080/api/auth/login
+          curl -fsS -b /tmp/yunx-cookies http://127.0.0.1:18080/api/state | python3 -c 'import json,sys; assert len(json.load(sys.stdin)["platforms"]) == 18'
+      - if: always()
+        run: docker logs yunx-test; docker rm -f yunx-test

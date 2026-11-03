@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"path"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -22,9 +23,11 @@ const quarkUA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (K
 const ucUA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) uc-cloud-drive/2.5.20 Chrome/100.0.4896.160 Electron/18.3.5.4-b478491100 Safari/537.36 Channel/pckk_other_ch"
 
 type Providers struct {
-	Store *Store
-	Net   *Network
-	mu    sync.Mutex
+	P2PProxy *url.URL
+	Bridge   *ProviderProcess
+	Store    *Store
+	Net      *Network
+	mu       sync.Mutex
 }
 type Platform struct {
 	ID         string `json:"id"`
@@ -35,14 +38,21 @@ type Platform struct {
 
 var Platforms = []Platform{{"quark", "夸克网盘", "cookie", true}, {"uc", "UC 网盘", "cookie", true}, {"pan123", "123 云盘", "token", true}, {"bilibili", "哔哩哔哩", "cookie", false}}
 
+type Quality struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
 type BrowseResult struct {
-	SessionID string `json:"session_id"`
-	Platform  string `json:"platform"`
-	Title     string `json:"title"`
-	Items     []Item `json:"items"`
-	Parent    string `json:"parent"`
-	Page      int    `json:"page"`
-	More      bool   `json:"more"`
+	Qualities []Quality `json:"qualities,omitempty"`
+	Quality   int       `json:"quality,omitempty"`
+	Notice    string    `json:"notice,omitempty"`
+	SessionID string    `json:"session_id"`
+	Platform  string    `json:"platform"`
+	Title     string    `json:"title"`
+	Items     []Item    `json:"items"`
+	Parent    string    `json:"parent"`
+	Page      int       `json:"page"`
+	More      bool      `json:"more"`
 }
 
 var urlPattern = regexp.MustCompile(`https?://[^\s<>"'，。]+`)
@@ -74,6 +84,37 @@ func (p *Providers) credentials(s *ParseSession) (map[string]string, error) {
 	return a.Credentials, nil
 }
 func (p *Providers) Resolve(ctx context.Context, text, password, accountID string, cloud bool) (*ParseSession, error) {
+	if !cloud && p2pInput(strings.TrimSpace(text)) {
+		return p.resolveP2P(ctx, strings.TrimSpace(text))
+	}
+	if p.Bridge != nil {
+		s, e := p.bridgeResolve(ctx, text, password, accountID, cloud)
+		if e != nil || s != nil {
+			return s, e
+		}
+	}
+	if !cloud && githubURL(urlPattern.FindString(text)) {
+		return p.githubResolve(ctx, urlPattern.FindString(text), accountID)
+	}
+	if cloud {
+		a, e := p.account(accountID)
+		if e != nil {
+			return nil, e
+		}
+		if a.Platform == "github" {
+			c := a.Credentials
+			h := map[string]string{"Authorization": "Bearer " + c["token"]}
+			j, _, err := p.Net.JSON(ctx, "GET", "https://api.github.com/user", h, nil)
+			if err != nil {
+				return nil, err
+			}
+			s, err := p.githubResolve(ctx, "https://github.com/"+str(j["login"]), accountID)
+			if s != nil {
+				s.Cloud = true
+			}
+			return s, err
+		}
+	}
 	s := &ParseSession{ID: randomID(), Input: strings.TrimSpace(text), Password: password, AccountID: accountID, Cloud: cloud, CreatedAt: now(), Items: map[string]Item{}, Cursors: map[string]string{}}
 	if cloud {
 		a, e := p.account(accountID)
@@ -123,6 +164,9 @@ func (p *Providers) Resolve(ctx context.Context, text, password, accountID strin
 		name, _ := url.PathUnescape(path.Base(u.Path))
 		if name == "" || name == "/" || name == "." {
 			name = "download.bin"
+		}
+		if strings.HasSuffix(strings.ToLower(u.Path), ".m3u8") {
+			name = strings.TrimSuffix(name, path.Ext(name)) + ".mp4"
 		}
 		s.Title = name
 		s.Items["file"] = Item{ID: "file", Name: name, Size: -1}
@@ -332,7 +376,21 @@ func parseCookies(s string) map[string]string {
 	return out
 }
 func (p *Providers) Browse(ctx context.Context, s *ParseSession, parent string, page int) (BrowseResult, error) {
-	out := BrowseResult{s.ID, s.Platform, s.Title, []Item{}, parent, page, false}
+	if s.Platform == "bt" || s.Platform == "ed2k" {
+		items := []Item{}
+		for _, item := range s.Items {
+			items = append(items, item)
+		}
+		sort.Slice(items, func(i, j int) bool { return items[i].ID < items[j].ID })
+		return BrowseResult{SessionID: s.ID, Platform: s.Platform, Title: s.Title, Parent: parent, Page: 1, Items: items}, nil
+	}
+	if s.Platform == "github" {
+		return p.githubBrowse(ctx, s, parent, page)
+	}
+	if p.bridgePlatform(s.Platform) {
+		return p.bridgeBrowse(ctx, s, parent, page)
+	}
+	out := BrowseResult{SessionID: s.ID, Platform: s.Platform, Title: s.Title, Items: []Item{}, Parent: parent, Page: page}
 	if page < 1 || page > 200 {
 		return out, fail("page_limit", "页码范围为 1–200，请缩小目录范围")
 	}
@@ -453,13 +511,27 @@ func (p *Providers) Browse(ctx context.Context, s *ParseSession, parent string, 
 	return out, nil
 }
 func (p *Providers) Sources(ctx context.Context, s *ParseSession, item Item) ([]MediaSource, error) {
+	if s.Platform == "bt" || s.Platform == "ed2k" {
+		return p.p2pSources(s)
+	}
+	if s.Platform == "github" {
+		return p.githubSources(ctx, s, item)
+	}
+	if p.bridgePlatform(s.Platform) {
+		return p.bridgeSources(ctx, s, item)
+	}
 	h, e := p.headers(s)
 	if e != nil {
 		return nil, e
 	}
 	switch s.Platform {
 	case "direct":
-		return []MediaSource{{URL: s.Input, Headers: map[string]string{"User-Agent": chromeUA}, Size: -1}}, nil
+		kind := "http"
+		u, _ := url.Parse(s.Input)
+		if strings.HasSuffix(strings.ToLower(u.Path), ".m3u8") {
+			kind = "hls"
+		}
+		return []MediaSource{{URL: s.Input, Headers: map[string]string{"User-Agent": chromeUA}, Size: -1, Kind: kind}}, nil
 	case "quark", "uc":
 		payload := map[string]any{"fids": []string{item.ID}}
 		if !s.Cloud {
@@ -617,6 +689,24 @@ func decode123(raw string) (string, error) {
 	return raw, nil
 }
 func (p *Providers) CheckAccount(ctx context.Context, a Account) (Account, error) {
+	if a.Platform == "github" {
+		j, _, e := p.Net.JSON(ctx, "GET", "https://api.github.com/user", map[string]string{"Authorization": "Bearer " + a.Credentials["token"]}, nil)
+		a.CheckedAt = now()
+		if e != nil {
+			a.Status = "unavailable"
+			a.Message = "GitHub 检查失败，凭据已保留"
+			return a, e
+		}
+		a.Nickname = str(j["login"])
+		a.Status = "expired"
+		if a.Nickname != "" {
+			a.Status = "valid"
+		}
+		return a, nil
+	}
+	if p.bridgePlatform(a.Platform) {
+		return p.bridgeCheck(ctx, a)
+	}
 	s := &ParseSession{Platform: a.Platform, AccountID: a.ID}
 	h, e := p.headers(s)
 	if e != nil {

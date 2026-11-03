@@ -1,0 +1,396 @@
+{
+  "repository": "https://github.com/tidain/YunX-Desktop",
+  "commit": "87ff5d6f34ab25627c214eb005ac1d1c07e2b782",
+  "license": "AGPL-3.0",
+  "files": {
+    "provider/src/main/kotlin/com/yunx/app/data/network/BaiduApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/BaiduApi.kt",
+      "sha256": "45a972c0e78a90f128f7472fdf68ca2770349f736f8cdc212c19a9e0412183bd",
+      "local_sha256": "2f56b4f0ee9f9c1da561758d058103faa59d0822869f7d55916f2df739b74189",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/BaiduApiException.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/BaiduApiException.kt",
+      "sha256": "75b7bea6e6492e7f6705074523543f02a652e9ab67a96bfc2543d0ec171372b1",
+      "local_sha256": "75b7bea6e6492e7f6705074523543f02a652e9ab67a96bfc2543d0ec171372b1",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/BaiduConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/BaiduConstants.kt",
+      "sha256": "e82ec31e21d8b16c4dd9e34f5b63e1995b421112e8fe24050ca4e009bfe6cee8",
+      "local_sha256": "e82ec31e21d8b16c4dd9e34f5b63e1995b421112e8fe24050ca4e009bfe6cee8",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/C139Api.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/C139Api.kt",
+      "sha256": "84a789156b76248be77d32975ebc4d57b61a689f12b4d76db3b975e9c3786da9",
+      "local_sha256": "85f37f443b1ee59bff23d01a66dbde7e39411e3f823bdb3f3017eb4bae2ad2bf",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/C139Constants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/C139Constants.kt",
+      "sha256": "37f4ef16880b565de9ad920ec96db30716a03ef5c0553b496be3c58b98b6f09f",
+      "local_sha256": "37f4ef16880b565de9ad920ec96db30716a03ef5c0553b496be3c58b98b6f09f",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/Pan115Api.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/Pan115Api.kt",
+      "sha256": "ab1bfc7ca243a4f7906e946a7ce1e2d6a5b889ed1f5eeed18ed7dca612e96071",
+      "local_sha256": "fe67ab56f5555766d0107a04604709015acddab3f96caab84376c18f9d5730d1",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/Pan115Constants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/Pan115Constants.kt",
+      "sha256": "ed6c353ddf9615b47c0cb34404b1e7d34d109273bc61adda0f664483cebd4cdc",
+      "local_sha256": "ed6c353ddf9615b47c0cb34404b1e7d34d109273bc61adda0f664483cebd4cdc",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/Pan115Crypto.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/Pan115Crypto.kt",
+      "sha256": "fa2a4c6f689474a69aa8088d2b1e6297f28e06826d83d08c1187524861152cc2",
+      "local_sha256": "fa2a4c6f689474a69aa8088d2b1e6297f28e06826d83d08c1187524861152cc2",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/XunleiApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/XunleiApi.kt",
+      "sha256": "7507120fe9ffa9926660665cfabc12edd2309fe88676226d524a99c3b58f2849",
+      "local_sha256": "155f3f6b9b8b9f3e7f018150172463805eaca02aec790fa92ab47de014ce0366",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/XunleiConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/XunleiConstants.kt",
+      "sha256": "7e5ec00e6caa1f2df3c382134621c29ed0bad78ab545914ee013236983292f4f",
+      "local_sha256": "7e5ec00e6caa1f2df3c382134621c29ed0bad78ab545914ee013236983292f4f",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/XunleiDeviceFingerprint.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/XunleiDeviceFingerprint.kt",
+      "sha256": "f52d878f1407cd15f5c2d31d8221543160627389549ea45fc7c88d69cb3be583",
+      "local_sha256": "6ba496b7d20417c9f5f52e711b8abee6d3b6f219c295e8a682795c49376b7a4b",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/XunleiKouling.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/XunleiKouling.kt",
+      "sha256": "5c881366b17beab3e6304e09e03da6770f342b24a63faf8469eaccd8822533ab",
+      "local_sha256": "5c881366b17beab3e6304e09e03da6770f342b24a63faf8469eaccd8822533ab",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/XunleiWebCredential.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/XunleiWebCredential.kt",
+      "sha256": "3ba54d1320f37441153dda6182d4e4497db78d47f54456b409f873c6a951253b",
+      "local_sha256": "3ba54d1320f37441153dda6182d4e4497db78d47f54456b409f873c6a951253b",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/GuangYaApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/GuangYaApi.kt",
+      "sha256": "54d8167ef9085e689f142c3ca11bc710f300aa80b6b9eed9ad56d9371d2d4c61",
+      "local_sha256": "cf62c3c4f0c049ac85f8b1163d004cf8fbbb72829c4d1c63e221152d04f6fd4a",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/GuangYaConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/GuangYaConstants.kt",
+      "sha256": "c2bfdf394770d1bb4ee3efef658f36d048697fd83d2f402aef56a6df2db94746",
+      "local_sha256": "c2bfdf394770d1bb4ee3efef658f36d048697fd83d2f402aef56a6df2db94746",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/LanzouApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/LanzouApi.kt",
+      "sha256": "69a8a4ed71fdfe743b7d02610e19fa7aea042e763d276fddfd8c98889ebcfd35",
+      "local_sha256": "69a8a4ed71fdfe743b7d02610e19fa7aea042e763d276fddfd8c98889ebcfd35",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/LanzouConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/LanzouConstants.kt",
+      "sha256": "c7cad232746491569e0b218dacb94e0463bcc0997adc0e7f6a580a15dd5f8b11",
+      "local_sha256": "c7cad232746491569e0b218dacb94e0463bcc0997adc0e7f6a580a15dd5f8b11",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/LanzouCrypto.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/LanzouCrypto.kt",
+      "sha256": "95b46e7b80d59c097a497540b836d1500a27e63b052d40b7474f649d24860125",
+      "local_sha256": "95b46e7b80d59c097a497540b836d1500a27e63b052d40b7474f649d24860125",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/ILanzouApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/ILanzouApi.kt",
+      "sha256": "68fd2cfb2320b2060b35a55974fcd46e860b1ad9bd63d33748e10d58178f6652",
+      "local_sha256": "d687eb73617bd05f88b1cb70da7f75bcac71bb1d797e5f7c42485dfa03339767",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/ILanzouConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/ILanzouConstants.kt",
+      "sha256": "c390c21e9fe9c1c8e969cb32856a9d830df4ab9f74ba8cd752a1487894429299",
+      "local_sha256": "c390c21e9fe9c1c8e969cb32856a9d830df4ab9f74ba8cd752a1487894429299",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/Pan123Api.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/Pan123Api.kt",
+      "sha256": "94e666e65459512d078746456017e263a2a6f6a719dfcb8eb1ed14263f881fe7",
+      "local_sha256": "131b6926626ee09eabd9b81f86429607b6e8a0cbdb91baaacf3628d317f6d139",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/Pan123Constants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/Pan123Constants.kt",
+      "sha256": "da159bb919058b890afff093422f8715a61d1490ba573fcd0590a69b29c395d9",
+      "local_sha256": "da159bb919058b890afff093422f8715a61d1490ba573fcd0590a69b29c395d9",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/Pan123DeviceId.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/Pan123DeviceId.kt",
+      "sha256": "2d065220b9771054148581b15d93336b4f197dae32929bb5568421bcff12adb0",
+      "local_sha256": "d2c1f5a2b6a97208c9ec4f00336c8a94c98dc4bde1a5b339c4fe2ca090363d74",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/Pan123LoginSupport.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/Pan123LoginSupport.kt",
+      "sha256": "1b6ff0cd7ddec3bd42e4c098516238a45af2069e9c0e8ed319a849f655ddd838",
+      "local_sha256": "1b6ff0cd7ddec3bd42e4c098516238a45af2069e9c0e8ed319a849f655ddd838",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/QuarkApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/QuarkApi.kt",
+      "sha256": "e1d023437dbf36ceee724592550cde6d9277e953b502c34f44d2e9bc2b530d1f",
+      "local_sha256": "d65a09804cc970fe608d3d0772cb5ff5d9090d4b299fabf1d5302587e78094e7",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/QuarkApiException.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/QuarkApiException.kt",
+      "sha256": "2a6ac09bddda4ce21e8773ed64ca003d19c8948552a3da7d1cdebb314bbf537a",
+      "local_sha256": "2a6ac09bddda4ce21e8773ed64ca003d19c8948552a3da7d1cdebb314bbf537a",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/QuarkConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/QuarkConstants.kt",
+      "sha256": "b1e41a5159ee7070f9616668ec409d04dce5428837840cb3bfafe23915727425",
+      "local_sha256": "083d1d8f662dbbdb84efa0a71e9d6de7d76cd4990cf340394b5602d83923d43d",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/QuarkCdn.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/QuarkCdn.kt",
+      "sha256": "4e1dca6a5ace5fb7b7690bc3c0e759966cec52b14189c027079666e6954dae4c",
+      "local_sha256": "4e1dca6a5ace5fb7b7690bc3c0e759966cec52b14189c027079666e6954dae4c",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/UCApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/UCApi.kt",
+      "sha256": "a69a246e9f63227e0a584cd2c203b0518c35f2f78d7a53746eb85d654cc091e1",
+      "local_sha256": "3a488f6c355487f11b1dd0cd0f249aba589b2f888ffb70851d4ea4fd5035865e",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/UCConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/UCConstants.kt",
+      "sha256": "d5b31b78dc6f132a56c10d8851099366d55e1bf3999ace3b8fde002b6d87bd1b",
+      "local_sha256": "d5b31b78dc6f132a56c10d8851099366d55e1bf3999ace3b8fde002b6d87bd1b",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/ShareLinkParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/ShareLinkParser.kt",
+      "sha256": "7fee70d4fb6639dc05339ab2e360312b6e289044e292fc251555d83fe6b6c921",
+      "local_sha256": "7fee70d4fb6639dc05339ab2e360312b6e289044e292fc251555d83fe6b6c921",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/StarSeaApi.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/StarSeaApi.kt",
+      "sha256": "9bfaa4425f5564fd2e97d703676216c7c4f52723974f136bbd43b13d1b2df45d",
+      "local_sha256": "9bfaa4425f5564fd2e97d703676216c7c4f52723974f136bbd43b13d1b2df45d",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/StarSeaConstants.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/StarSeaConstants.kt",
+      "sha256": "71ceced94f446c498127f93b1ae8bf98a1d3c08df5129fd6aebafff2b12d4ebc",
+      "local_sha256": "71ceced94f446c498127f93b1ae8bf98a1d3c08df5129fd6aebafff2b12d4ebc",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/model/ShareModels.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/model/ShareModels.kt",
+      "sha256": "face2c744520add85a268cc2eb90e26fc323f8d0c1ab85453231183fcd2dd934",
+      "local_sha256": "face2c744520add85a268cc2eb90e26fc323f8d0c1ab85453231183fcd2dd934",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/model/ShareExpire.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/model/ShareExpire.kt",
+      "sha256": "1269c34d82a761ecacd30fa26e6f8610656448dc097b39f641dc72498d5b6076",
+      "local_sha256": "1269c34d82a761ecacd30fa26e6f8610656448dc097b39f641dc72498d5b6076",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/XhsParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/XhsParser.kt",
+      "sha256": "e899284e1be261707926a2424410efc19aff1ba5ef01b98d390b968ce58a0ed0",
+      "local_sha256": "e899284e1be261707926a2424410efc19aff1ba5ef01b98d390b968ce58a0ed0",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/WeiboParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/WeiboParser.kt",
+      "sha256": "f0c10252a9564da2c52c79e4e96fd1d0fcc320c0885e85f7135df050192a2e83",
+      "local_sha256": "f0c10252a9564da2c52c79e4e96fd1d0fcc320c0885e85f7135df050192a2e83",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/VideoPlatform.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/VideoPlatform.kt",
+      "sha256": "05f333ce785f91c126d656ac8eea6513380417602dab35e519c39d542c57a73c",
+      "local_sha256": "05f333ce785f91c126d656ac8eea6513380417602dab35e519c39d542c57a73c",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/VideoParsers.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/VideoParsers.kt",
+      "sha256": "2c8749e9bda3cf4c7f1b14b164cdbe5fa04a03b4b1f29c131d368a107afc9f48",
+      "local_sha256": "2c8749e9bda3cf4c7f1b14b164cdbe5fa04a03b4b1f29c131d368a107afc9f48",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/VideoParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/VideoParser.kt",
+      "sha256": "7e793a15fb77a946b506a722c74c1360ad78cd9c6d564248d0e97621ce652b83",
+      "local_sha256": "7e793a15fb77a946b506a722c74c1360ad78cd9c6d564248d0e97621ce652b83",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/VideoModels.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/VideoModels.kt",
+      "sha256": "6c32e21ac7ba9bb59a7b80705e5c641ea2946ac6db6f56a4ee18dcfef7036b9a",
+      "local_sha256": "8b3f74d0e5ee9b1b32d17d2998fa05f97f5a17c74abef2d76a9a9df00f845bd1",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/VideoLinkParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/VideoLinkParser.kt",
+      "sha256": "d0afe9d6b2135bca2cdb103046168e82ea9b5908616d4c955690648c6a00f25d",
+      "local_sha256": "d0afe9d6b2135bca2cdb103046168e82ea9b5908616d4c955690648c6a00f25d",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/VideoHttp.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/VideoHttp.kt",
+      "sha256": "d9e86cf13a4119cf8804a3b671171374d5a3b1c0a7abb9f72fd863f0ab5c6d7a",
+      "local_sha256": "d9e86cf13a4119cf8804a3b671171374d5a3b1c0a7abb9f72fd863f0ab5c6d7a",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/PixivParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/PixivParser.kt",
+      "sha256": "b44c221d491399c43386b30632c7b233c7d2052b77e32ca506754b2d18875620",
+      "local_sha256": "5a076f0980e2af5f19a86dff1d6c95bf18a25383906bbd47c5bce2d041f08a64",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/KuaishouParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/KuaishouParser.kt",
+      "sha256": "040074408a2e2658d356d1cf83f6ddbc6f54d928b0561db74293f3db00a23117",
+      "local_sha256": "040074408a2e2658d356d1cf83f6ddbc6f54d928b0561db74293f3db00a23117",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/DouyinParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/DouyinParser.kt",
+      "sha256": "24d82da169b8f04d417113538da679d36450c274abcb3b1f22e54be7fffc034c",
+      "local_sha256": "24d82da169b8f04d417113538da679d36450c274abcb3b1f22e54be7fffc034c",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/BilibiliParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/BilibiliParser.kt",
+      "sha256": "207a0c3145439a7edc208e788f0a8d50f98103c602fb69e10cbc26b819f24714",
+      "local_sha256": "c7d42688b25116d712b82e1ecda1a7e2bd64ca04d77f6c89c9570669f26be36e",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/network/video/AcFunParser.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/network/video/AcFunParser.kt",
+      "sha256": "0c2db17bb1edbee8da2a574256fa4affdeca2c54a9805d3d6e589fd606adf0f3",
+      "local_sha256": "0c2db17bb1edbee8da2a574256fa4affdeca2c54a9805d3d6e589fd606adf0f3",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/download/DownloadPathPolicy.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/download/DownloadPathPolicy.kt",
+      "sha256": "d8abeb7dd81e753c596f72b591fa8954e0d8ef2feee4439576e31401b7c77713",
+      "local_sha256": "d8abeb7dd81e753c596f72b591fa8954e0d8ef2feee4439576e31401b7c77713",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/ShareResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/ShareResolveRepository.kt",
+      "sha256": "2acccd7b97056e7808f9ddab1a29d4991d3c5e12b6af0a725d5108ecb25b9fc9",
+      "local_sha256": "2acccd7b97056e7808f9ddab1a29d4991d3c5e12b6af0a725d5108ecb25b9fc9",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/TransferSpaceGuard.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/TransferSpaceGuard.kt",
+      "sha256": "ea776414235cf52d012a75a8059b62d371922b721b88cc65e0b697cf29a510c1",
+      "local_sha256": "ea776414235cf52d012a75a8059b62d371922b721b88cc65e0b697cf29a510c1",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/QuarkResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/QuarkResolveRepository.kt",
+      "sha256": "120e567212d85a5e3db8d026ac0d51c217f3366d057f7e8692666a38b53ff435",
+      "local_sha256": "2123f22eae8826d644f3c92a2b3c7dae172a17ed101312ff729d7451261e3648",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/UCResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/UCResolveRepository.kt",
+      "sha256": "31d34d5e76e6c2143cbfc6d1d4442a56862e08503c728af598c3a9b895cbb572",
+      "local_sha256": "31d34d5e76e6c2143cbfc6d1d4442a56862e08503c728af598c3a9b895cbb572",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/Pan123ResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/Pan123ResolveRepository.kt",
+      "sha256": "bfb3bc46318d8420813ab255f8132c8ab0d02c76ef9c9daf6dc13d668f868930",
+      "local_sha256": "bfb3bc46318d8420813ab255f8132c8ab0d02c76ef9c9daf6dc13d668f868930",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/BaiduResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/BaiduResolveRepository.kt",
+      "sha256": "dee8c0e5dd4fd74b9bc5fd06d2ecf39ea9dc8155bc9a1528a7c1570f21f423f3",
+      "local_sha256": "1b3aec6d576a961f3ff8e8989ebfd754aa9def65814510f1fce4cb004afa7b49",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/C139ResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/C139ResolveRepository.kt",
+      "sha256": "81ed9c14db34dc42b34ade48188d3d863b05427f7fb5d22ffbcece6d436bb6e8",
+      "local_sha256": "81ed9c14db34dc42b34ade48188d3d863b05427f7fb5d22ffbcece6d436bb6e8",
+      "modified": false
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/Pan115ResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/Pan115ResolveRepository.kt",
+      "sha256": "6016060c98ebc546e42076dadd0fafee0b490ae1c302486c68f1337c28858359",
+      "local_sha256": "fc05760e9e8c4f27d59b0ed43a856d244260e75a62bb5090044b4c969134694c",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/GuangYaResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/GuangYaResolveRepository.kt",
+      "sha256": "0dc2ba1b44778d20ec12b7d1250bb151c32c45e06bbc7acbfac511ba4cd8f391",
+      "local_sha256": "d265f9c1a1491185cd2c4e784bc729b5c02528b751e0a2fd691bc44b206b687d",
+      "modified": true
+    },
+    "provider/src/main/kotlin/com/yunx/app/data/repository/LanzouResolveRepository.kt": {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/repository/LanzouResolveRepository.kt",
+      "sha256": "bee14e29f5741a0be6dcc2b4f4c2407043c6c1408f2613bb932e9c522dc3a0d9",
+      "local_sha256": "bee14e29f5741a0be6dcc2b4f4c2407043c6c1408f2613bb932e9c522dc3a0d9",
+      "modified": false
+    },
+    "provider/src/test/kotlin/com/yunx/app/data/network/ShareLinkParserTest.kt": {
+      "upstream": "desktop/src/test/kotlin/com/yunx/app/data/network/ShareLinkParserTest.kt",
+      "sha256": "d6c4a41dc4f2e9cc27aae9b3aa1ad9f46ed5aaae28ab4d0806d88be7a0a59497",
+      "local_sha256": "d6c4a41dc4f2e9cc27aae9b3aa1ad9f46ed5aaae28ab4d0806d88be7a0a59497",
+      "modified": false
+    },
+    "provider/src/test/kotlin/com/yunx/app/data/network/XunleiWebCredentialTest.kt": {
+      "upstream": "desktop/src/test/kotlin/com/yunx/app/data/network/XunleiWebCredentialTest.kt",
+      "sha256": "0be35f2484c96fe906a76c0cb4d4ef06333158f0095ed41d9a178508b70455d9",
+      "local_sha256": "0be35f2484c96fe906a76c0cb4d4ef06333158f0095ed41d9a178508b70455d9",
+      "modified": false
+    },
+    "provider/src/test/kotlin/com/yunx/app/data/network/VideoLinkParserTest.kt": {
+      "upstream": "desktop/src/test/kotlin/com/yunx/app/data/network/VideoLinkParserTest.kt",
+      "sha256": "3f5240593bec38b1f507724bf5e6aa85e14565e2b91670489e71877fd5cf5650",
+      "local_sha256": "3f5240593bec38b1f507724bf5e6aa85e14565e2b91670489e71877fd5cf5650",
+      "modified": false
+    }
+  },
+  "references": [
+    {
+      "upstream": "desktop/src/main/kotlin/com/yunx/app/data/download/MotionPhotoWriter.kt",
+      "sha256": "83cde3758708b5dc99b84d3095ea1c108ddc4c4ca18cd54236fe2ec201ee1489",
+      "implementation": "internal/server/motion_photo.go",
+      "purpose": "Motion Photo XMP/Exif container, ported to Go"
+    }
+  ],
+  "changes": [
+    "Headless IPC and per-request credentials replace desktop application storage.",
+    "Persistent device IDs come from Go encrypted configuration.",
+    "Bounded checked HTTP clients and Chromium worker replace desktop network/browser lifecycle.",
+    "Fix cloud pagination and directory paths; reject malformed lists.",
+    "Expose Bilibili multi-part videos and quality; preserve motion media.",
+    "Record cleanup failures; remove only per-task transferred files, not shared folders.",
+    "Keep upstream authors and AGPL-3.0; new server adapters are licensed identically."
+  ]
+}

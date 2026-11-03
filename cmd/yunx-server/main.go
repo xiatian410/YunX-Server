@@ -14,7 +14,7 @@ import (
 	"yunx-server/internal/webassets"
 )
 
-var version = "0.1.0"
+var version = "0.2.0-draft"
 
 func env(key, fallback string) string {
 	if v := os.Getenv(key); v != "" {
@@ -37,6 +37,20 @@ func main() {
 	data := env("YUNX_DATA_DIR", "data")
 	root := env("YUNX_DOWNLOAD_DIR", "downloads")
 	cfg := server.Config{DataDir: data, DownloadDir: root, AdminPassword: os.Getenv("YUNX_ADMIN_PASSWORD"), PublicURL: os.Getenv("YUNX_PUBLIC_URL"), AllowPrivate: os.Getenv("YUNX_ALLOW_PRIVATE_DOWNLOADS") == "true", Assets: webassets.FS(), Version: version}
+	defaultJar, defaultBrowser := "provider/build/libs/yunx-provider.jar", "provider/browser.mjs"
+	if exe, err := os.Executable(); err == nil {
+		packaged := filepath.Join(filepath.Dir(exe), "provider", "provider.jar")
+		if _, err = os.Stat(packaged); err == nil {
+			defaultJar = packaged
+			defaultBrowser = filepath.Join(filepath.Dir(exe), "provider", "browser.mjs")
+		}
+	}
+	cfg.ProviderJar = env("YUNX_PROVIDER_JAR", defaultJar)
+	if cfg.ProviderJar == "disabled" {
+		cfg.ProviderJar = ""
+	}
+	cfg.BrowserScript = env("YUNX_BROWSER_SCRIPT", defaultBrowser)
+	cfg.BrowserScript, _ = filepath.Abs(cfg.BrowserScript)
 	if webDir := os.Getenv("YUNX_WEB_DIR"); webDir != "" {
 		cfg.Assets = os.DirFS(webDir)
 	}
@@ -65,5 +79,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	_ = srv.Shutdown(ctx)
+	if app.Providers.Bridge != nil {
+		app.Providers.Bridge.Close()
+	}
 	_ = app.Store.DB.Close()
 }

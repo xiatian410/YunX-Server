@@ -10,6 +10,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -163,14 +164,15 @@ func NewManager(s *Store, p *Providers, root, baseURL string) (*Manager, error) 
 		t.Speed = 0
 		m.tasks[id] = &t
 	}
-	cfg := (&download.DownloaderConfig{Storage: engineStorage{s}, StorageDir: filepath.Join(abs, ".yunx", "engine"), RefreshInterval: 1000, WhiteDownloadDirs: []string{filepath.Join(abs, ".yunx", "*")}}).Init()
-	fms := cfg.FetchManagers[:0]
-	for _, fm := range cfg.FetchManagers {
-		if fm.Name() == "http" {
-			fms = append(fms, fm)
-		}
+	proxyAddr, proxyToken, stopProxy, err := startCheckedProxy(p.Net.AllowPrivate, 10*time.Minute, false)
+	if err != nil {
+		cancel()
+		return nil, err
 	}
-	cfg.FetchManagers = fms
+	p.P2PProxy, _ = url.Parse(proxyAddr)
+	p.P2PProxy.User = url.UserPassword("yunx", proxyToken)
+	go func() { <-ctx.Done(); stopProxy() }()
+	cfg := (&download.DownloaderConfig{Storage: engineStorage{s}, StorageDir: filepath.Join(abs, ".yunx", "engine"), RefreshInterval: 1000, WhiteDownloadDirs: []string{filepath.Join(abs, ".yunx", "*"), filepath.Join(abs, ".yunx", "*", "payload")}}).Init()
 	m.engine = download.NewDownloader(cfg)
 	m.engine.Listener(m.onEngine)
 	if err = m.engine.Setup(); err != nil {
@@ -235,6 +237,10 @@ func (m *Manager) ApplySettings(s Settings) error {
 		return err
 	}
 	cfg.MaxRunning = s.Concurrency * 2
+	if u := m.providers.P2PProxy; u != nil {
+		password, _ := u.User.Password()
+		cfg.Proxy = &base.DownloaderProxyConfig{Enable: true, Scheme: u.Scheme, Host: u.Host, Usr: u.User.Username(), Pwd: password}
+	}
 	cfg.DownloadDir = m.root
 	cfg.AutoTorrent.Enable = false
 	cfg.Archive.AutoExtract = false
@@ -297,6 +303,13 @@ func (m *Manager) Directory(relative string, create bool) (string, error) {
 	return full, nil
 }
 func (m *Manager) Add(s *ParseSession, items []Item, dir string) ([]Task, error) {
+	if s.Platform == "bt" && len(items) > 0 {
+		bundle, e := torrentBundle(s, items)
+		if e != nil {
+			return nil, e
+		}
+		items = []Item{bundle}
+	}
 	if len(items) == 0 || len(items) > 1000 {
 		return nil, fail("selection_limit", "每批请选择 1–1000 个文件")
 	}
@@ -315,6 +328,13 @@ func (m *Manager) Add(s *ParseSession, items []Item, dir string) ([]Task, error)
 	defer m.mu.Unlock()
 	if len(m.tasks)+len(items) > 10000 {
 		return nil, fail("task_limit", "任务记录已达 10000 条，请清理完成记录")
+	}
+	if s.Platform == "bt" {
+		for _, existing := range m.tasks {
+			if existing.Platform == "bt" && existing.Session != nil && existing.Session.ShareID == s.ShareID && existing.Status != "completed" && existing.Status != "cancelled" {
+				return nil, fail("torrent_exists", "该种子已有未完成任务，请先完成或删除原任务")
+			}
+		}
 	}
 	out := []Task{}
 	pending := []*Task{}
@@ -482,12 +502,13 @@ func (m *Manager) prepare(ctx context.Context, id string) {
 	defer timeout()
 	s := copyTask.Session
 	item := copyTask.Item
-	if len(copyTask.Sources) > 0 && s.Platform != "direct" && s.Platform != "bilibili" {
+	if len(copyTask.Sources) > 0 && s.Platform != "direct" && s.Platform != "bilibili" && s.Platform != "bt" && s.Platform != "ed2k" && s.Platform != "github" && item.Extra["media_index"] == "" {
 		fresh, e := m.providers.Resolve(ctx, s.Input, s.Password, s.AccountID, s.Cloud)
 		if e != nil {
 			m.taskError(id, e)
 			return
 		}
+		fresh.Quality = s.Quality
 		found := false
 		for page := 1; page <= 200; page++ {
 			r, e := m.providers.Browse(ctx, fresh, item.Extra["parent"], page)
@@ -515,6 +536,14 @@ func (m *Manager) prepare(ctx context.Context, id string) {
 	sources, e := m.providers.Sources(ctx, s, item)
 	if e != nil {
 		m.taskError(id, e)
+		return
+	}
+	if len(sources) == 1 && (sources[0].Kind == "bt" || sources[0].Kind == "ed2k") {
+		m.prepareP2P(ctx, id, sources, item)
+		return
+	}
+	if len(sources) == 1 && sources[0].Kind == "hls" {
+		m.runHLS(id, sources)
 		return
 	}
 	if len(sources) == 2 {
@@ -778,6 +807,9 @@ func (m *Manager) taskError(id string, err error) {
 		}
 	}
 	t.Speed = 0
+	if cancel := m.cancels[id]; cancel != nil {
+		cancel()
+	}
 	ids := nonempty(t.EngineIDs)
 	m.saveLocked(t)
 	m.store.Event(id, t.Status, t.Error)
@@ -798,6 +830,14 @@ func nonempty(v []string) []string {
 }
 func (m *Manager) finish(id string) {
 	m.mu.Lock()
+	probe := m.tasks[id]
+	bt := probe != nil && probe.Platform == "bt"
+	m.mu.Unlock()
+	if bt {
+		m.finishTorrent(id)
+		return
+	}
+	m.mu.Lock()
 	t := m.tasks[id]
 	if t == nil || t.Status != "downloading" {
 		m.mu.Unlock()
@@ -812,7 +852,14 @@ func (m *Manager) finish(id string) {
 	defer cancel()
 	work := filepath.Join(m.root, ".yunx", id)
 	output := filepath.Join(work, "part-0")
-	if len(copyTask.Sources) == 2 {
+	if len(copyTask.Sources) == 2 && copyTask.Sources[1].Kind == "motion" {
+		var err error
+		output, err = makeMotionPhoto(ctx, work)
+		if err != nil {
+			m.taskError(id, err)
+			return
+		}
+	} else if len(copyTask.Sources) == 2 {
 		output = filepath.Join(work, "merged.mp4")
 		cmd := exec.CommandContext(ctx, "ffmpeg", "-nostdin", "-hide_banner", "-loglevel", "error", "-y", "-i", filepath.Join(work, "part-0"), "-i", filepath.Join(work, "part-1"), "-map", "0:v:0", "-map", "1:a:0", "-c", "copy", "-movflags", "+faststart", output)
 		if e := cmd.Run(); e != nil {
@@ -859,6 +906,7 @@ func (m *Manager) finish(id string) {
 	t.ErrorCode = ""
 	m.saveLocked(t)
 	m.store.Event(id, "completed", "文件已保存到下载目录")
+	m.cleanupLater(*t)
 	_ = os.RemoveAll(work)
 	m.signal()
 }
@@ -921,12 +969,18 @@ func (m *Manager) Action(id, action string, deleteFile bool) error {
 		if c := m.cancels[id]; c != nil {
 			c()
 		}
+		p2p := t.Platform == "bt" || t.Platform == "ed2k"
+		m.cleanupLater(*t)
 		t.Status = "cancelled"
 		t.Speed = 0
 		m.saveLocked(t)
 		m.mu.Unlock()
 		if len(ids) > 0 {
-			_ = m.engine.Pause(&download.TaskFilter{IDs: ids})
+			if p2p {
+				_ = m.engine.Delete(&download.TaskFilter{IDs: ids}, false)
+			} else {
+				_ = m.engine.Pause(&download.TaskFilter{IDs: ids})
+			}
 		}
 		m.signal()
 		return nil
@@ -946,7 +1000,7 @@ func (m *Manager) Action(id, action string, deleteFile bool) error {
 				m.mu.Unlock()
 				return e
 			}
-			e = r.Remove(t.Name)
+			e = r.RemoveAll(t.Name)
 			r.Close()
 			if e != nil && !errors.Is(e, os.ErrNotExist) {
 				m.mu.Unlock()
@@ -957,6 +1011,7 @@ func (m *Manager) Action(id, action string, deleteFile bool) error {
 			m.mu.Unlock()
 			return e
 		}
+		m.cleanupLater(*t)
 		delete(m.tasks, id)
 		m.notifyLocked()
 		m.mu.Unlock()
