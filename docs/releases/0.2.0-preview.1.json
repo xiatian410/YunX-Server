@@ -1,0 +1,92 @@
+{
+  "version": "0.2.0-preview.1",
+  "published_date": "2026-11-04",
+  "date_timezone": "Asia/Shanghai",
+  "verified_at_utc": "2026-11-03T16:48:00.093199+00:00",
+  "source_commit": "fa9695d834add9ad5411a60da280b9cf389def84",
+  "workflow": "https://github.com/xiatian410/YunX-Server/actions/runs/41675856625",
+  "workflow_conclusion": "success",
+  "registry": {
+    "image": "ghcr.io/xiatian410/yunx-server:0.2.0-preview.1",
+    "anonymous": true,
+    "digest": "sha256:7e44995fa2ac091e606a8ccea3a854898506d8070c6d54a6e545f8592c97fd78",
+    "variants": [
+      {
+        "architecture": "amd64",
+        "digest": "sha256:3c9ce8b5e64adce60c8fe095c8c0a46f22324fae697272e29018c30f44057076",
+        "version": "0.2.0-preview.1",
+        "revision": "fa9695d834add9ad5411a60da280b9cf389def84",
+        "compressed_bytes": 530321278
+      },
+      {
+        "architecture": "arm64",
+        "digest": "sha256:1da0a8a5def3d935b57c994ed7c43f21b461d2538ef18c2188b96636ca585484",
+        "version": "0.2.0-preview.1",
+        "revision": "fa9695d834add9ad5411a60da280b9cf389def84",
+        "compressed_bytes": 518629583
+      }
+    ]
+  },
+  "latest_matches_version": true,
+  "anonymous_pull": {
+    "credential_store": "empty Docker and registry auth files",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "complete_layers_downloaded": true,
+    "layer_integrity": "crane validate without --fast: PASS for both archives"
+  },
+  "native_runtime": {
+    "amd64": {
+      "image": "yunx-release:amd64",
+      "version": "0.2.0-preview.1",
+      "architecture": "x86_64",
+      "compose": true,
+      "non_root": true,
+      "read_only": true,
+      "healthcheck": true,
+      "platforms": 18,
+      "icons": 19,
+      "frozen_web_assets": true,
+      "http_download_sha256": "b70985173a222501fd033a5e01f2508c679454c4bcc0c75fd1130cfc4a131a67",
+      "restart_persistence": true,
+      "runtime": {
+        "java": "openjdk version \"17.0.21\" 2026-10-20",
+        "node": "v22.23.4",
+        "ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers",
+        "ffprobe": "ffprobe version 5.1.9-0+deb12u1 Copyright (c) 2007-2026 the FFmpeg developers",
+        "chromium": "156.0.8078.79"
+      }
+    },
+    "arm64": {
+      "image": "yunx-release:arm64",
+      "version": "0.2.0-preview.1",
+      "architecture": "aarch64",
+      "compose": true,
+      "non_root": true,
+      "read_only": true,
+      "healthcheck": true,
+      "platforms": 18,
+      "icons": 19,
+      "frozen_web_assets": true,
+      "http_download_sha256": "b70985173a222501fd033a5e01f2508c679454c4bcc0c75fd1130cfc4a131a67",
+      "restart_persistence": true,
+      "runtime": {
+        "java": "openjdk version \"17.0.21\" 2026-10-20",
+        "node": "v22.23.4",
+        "ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers",
+        "ffprobe": "ffprobe version 5.1.9-0+deb12u1 Copyright (c) 2007-2026 the FFmpeg developers",
+        "chromium": "156.0.8078.79"
+      }
+    }
+  },
+  "not_verified": [
+    "physical NAS",
+    "real upstream platform accounts",
+    "long-running production workloads"
+  ],
+  "known_limitations": [
+    "Existing Gopeed 1.9.3 race findings remain; this is a preview release."
+  ]
+}

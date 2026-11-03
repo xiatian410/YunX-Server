@@ -26,7 +26,7 @@
 
 > 本项目同样采用 **AGPL-3.0**，参考 [CYQawa/YunX](https://github.com/CYQawa/YunX) 与 [tidain/YunX-Desktop](https://github.com/tidain/YunX-Desktop) 为 NAS 重写服务端和网页，复用原项目平台网络代码及图标。本项目为非官方 NAS 衍生版本。
 
-> **当前为开发初稿。** 常规功能测试通过，但 Gopeed 1.9.3 的并发检测发现数据竞争；Linux amd64 容器构建及只读启动已通过 CI，真实平台账号与实体 NAS 尚未验证。请先阅读 [验证记录](docs/validation.md)，不要将本版视为生产稳定版。
+> **当前为开发初稿。** 常规功能测试通过，但 Gopeed 1.9.3 的并发检测发现数据竞争；Linux amd64 / arm64 原生容器的构建、只读启动、下载与重启保留检查已通过 CI，真实平台账号与实体 NAS 尚未验证。请先阅读 [验证记录](docs/validation.md)，不要将本版视为生产稳定版。
 
 ## 简介
 
@@ -75,32 +75,57 @@ NAS 账号入口采用手动 Cookie / Token，并提供迅雷设备 ID / 验证�
 
 ## 部署
 
-### NAS / Docker Compose
+### NAS / Docker Compose（直接使用镜像）
 
-先获取源码：
+[发布与部署文件](https://github.com/xiatian410/YunX-Server/releases/tag/v0.2.0-preview.1) · [镜像仓库](https://github.com/users/xiatian410/packages/container/package/yunx-server)
+
+镜像：`ghcr.io/xiatian410/yunx-server:0.2.0-preview.1`，同时提供 `linux/amd64` 和 `linux/arm64`，Docker 自动选择对应架构。镜像包含网页、Go 服务、Java 17 / Kotlin 解析模块、Node.js 22、Chromium、FFmpeg 和 SQLite；宿主机只需要 Docker / Compose，无需安装编译工具或 Java。
+
+这是预览版，已知限制见 [验证记录](docs/validation.md)。`latest` 指向最近发布的预览镜像；默认 Compose 固定版本，便于复现与回退。
+
+下载两个部署文件即可，无需克隆源码：
+
+```sh
+mkdir -p yunx-server
+cd yunx-server
+curl -fL https://raw.githubusercontent.com/xiatian410/YunX-Server/v0.2.0-preview.1/compose.yaml -o compose.yaml
+curl -fL https://raw.githubusercontent.com/xiatian410/YunX-Server/v0.2.0-preview.1/.env.example -o .env
+```
+
+编辑 `.env`，填写数据目录 `DATA_DIR`、下载目录 `DOWNLOAD_DIR`、目录已有拥有者的 `PUID` / `PGID` 和网页 `PORT`。例如使用 NAS 上现有的下载共享目录时，应填写该目录的实际路径和 UID/GID，不必改成示例的 1000。两个目录须预先存在且对指定用户可写；程序不自动修改共享目录权限。
+
+```sh
+# 使用默认相对目录时，先创建目录，并确认 .env 的 UID/GID 与目录权限匹配
+mkdir -p data downloads
+id -u
+id -g
+# 编辑好 .env 后启动；这里不会进行源码构建
+docker compose pull
+docker compose up -d
+docker compose logs --tail=50 yunx
+```
+
+浏览器访问 `http://NAS-IP:8080`（或配置的端口）。用户名 `admin`，初始密码在挂载的数据目录中的 `initial-password.txt`；首次登录后在设置中修改密码。
+
+更新时先备份数据目录，在 `.env` 中把 `YUNX_IMAGE` 改为目标版本，再执行 `docker compose pull && docker compose up -d`。更换镜像时保留原数据与下载目录；后续版本的数据迁移与回退要求以对应发布说明为准。
+
+Compose 内存上限为 1536 MiB、临时目录 256 MiB；解析模块 JVM 堆上限 192 MiB，Chromium 同时至多一个实例。默认非 root、无额外 capabilities、只读根文件系统，写入仅在 `/data`、`/downloads` 和 `/tmp`。
+
+反向代理访问时将 `PUBLIC_URL` 设置为浏览器访问的源，例如 `https://yunx.example.com`；保留原 Host，允许 SSE 长连接并关闭该路由缓冲。不自动信任转发 IP。凭据仅通过你自己的平台账号获取，平台验证或权限不足会明确显示，程序不跳过平台验证。
+
+### 从源码构建容器
+
+开发者可克隆仓库，并使用构建覆盖文件；普通部署只使用上面的镜像和 Compose：
 
 ```sh
 git clone https://github.com/xiatian410/YunX-Server.git
 cd YunX-Server
-```
-
-1. 复制 `.env.example` 为 `.env`，填写 NAS 用户的 UID/GID 与可写的 `DATA_DIR` / `DOWNLOAD_DIR`。数据目录和下载目录必须预先存在，且该 UID/GID 有写权限。程序不修改共享目录的拥有者。
-2. 执行 `docker compose up -d --build`。
-3. 浏览器访问 `http://NAS-IP:8080`。用户名 `admin`，初始密码在数据目录的 `initial-password.txt` 中；首次登录后可在设置中改密。
-
-```sh
 cp .env.example .env
-mkdir -p data downloads
-# 在 .env 中填写目录已有拥有者的 UID/GID，再启动
-id -u
-id -g
-docker compose up -d --build
-docker compose logs --tail=50 yunx
+# 配置可写目录和 UID/GID 后执行
+docker compose -f compose.yaml -f compose.build.yaml up -d --build
 ```
 
-可由 `docker buildx build --platform linux/amd64,linux/arm64 ...` 构建两种架构。运行镜像包含 Java 17、Node 22、Chromium 和 FFmpeg。Compose 内存上限为 1536 MiB、临时目录 256 MiB；解析模块 JVM 堆上限 192 MiB，Chromium 同时至多一个实例。默认非 root、无额外 capabilities、只读根文件系统，写入仅在 `/data`、`/downloads` 和 `/tmp`。
-
-反向代理访问时将 `PUBLIC_URL` 设置为浏览器访问的源，例如 `https://yunx.example.com`；保留原 Host，允许 SSE 长连接并关闭该路由缓冲。不自动信任转发 IP。凭据仅通过你自己的平台账号获取，平台验证或权限不足会明确显示，程序不跳过平台验证。
+镜像发布工作流为 `.github/workflows/publish.yml`：源码检查与两种架构的原生容器验证通过后，才合并并发布版本 / latest 标签。每个镜像包含版本、源码提交及 AGPL-3.0 OCI 标签。
 
 ### 二进制运行
 
@@ -110,7 +135,7 @@ docker compose logs --tail=50 yunx
 YUNX_DATA_DIR=./data YUNX_DOWNLOAD_DIR=./downloads ./release/yunx-server
 ```
 
-当前仓库提供源码与构建文件，未发布预编译 Release 或容器镜像。
+容器部署请使用上方镜像。独立二进制运行目录仍需通过 `make build` 构建；本次镜像发布不包含独立二进制包。
 
 ## 使用
 

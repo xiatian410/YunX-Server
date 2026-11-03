@@ -99,3 +99,13 @@ Impeccable 最终机械检测仅运行一次，返回 1 条 Roboto 常见字体�
 本次首个远端运行 [41666449269](https://github.com/xiatian410/YunX-Server/actions/runs/41666449269)：容器构建与只读启动通过；源码任务的 Kotlin 测试通过，但 Go `TestBrowserProxyAndWorker` 在创建浏览器上下文时触发既有 10 秒预算。日志显示该夹具自动选择 `/usr/bin/chromium`（156.0.8078.0），而网页 Playwright 固定使用同机 `/usr/bin/google-chrome`（156.0.8078.79）。仅将 CI test job 的 `YUNX_CHROMIUM` 显式设为与网页测试相同的 Chrome；容器和产品浏览器选择逻辑不变，没有加超时、重试或跳过测试。该环境设置本地连续三次代理/worker 测试通过（0.68 / 0.65 / 0.63 秒），YAML、冻结与差异检查通过。Chromium 内部超时根因仍未确定，不将浏览器选择一致化描述为已修复 Chromium 本身。
 
 最终完整 CI：[41667576058](https://github.com/xiatian410/YunX-Server/actions/runs/41667576058)，提交 `29b8a96`（界面实现为 `6ace605`）。源码与容器两个任务均通过：干净环境重新执行 Kotlin / Go / 10 个浏览器场景、79 文件冻结及 62 文件来源校验，完成 Linux amd64 / arm64 编译、amd64 嵌入网页冒烟，以及非 root / 只读容器启动。arm64 QEMU 冒烟另在本地通过。没有跳过失败测试或增加重试；未部署 NAS、未发布镜像，真实账号与长期任务的未验证范围不变。
+
+## 首次容器镜像发布（2026-11-04，Asia/Shanghai）
+
+已发布 `ghcr.io/xiatian410/yunx-server:0.2.0-preview.1` 与 `:latest`，包含 `linux/amd64`、`linux/arm64`。源码提交为 `fa9695d834add9ad5411a60da280b9cf389def84`，完整发布流水线 [41675856625](https://github.com/xiatian410/YunX-Server/actions/runs/41675856625) 全部通过。初始构建在发布前主动取消，以补全日志管道的失败传递；最终流程没有跳过测试或放宽测试预算。
+
+两架构分别在原生 GitHub 运行器上使用随附 Compose 启动，验证非 root、只读根目录、健康检查、认证、18 平台、19 图标及冻结网页哈希。容器内 Java 17、Node.js 22、Chromium 的页面执行、FFmpeg / ffprobe 检查通过；受控 HTTP 源实际下载的文件 SHA-256 一致，重启后任务记录和文件保留。
+
+在空 Docker / registry 凭据配置下，从 GHCR 完整拉取两架构镜像，再用 `crane validate` 检查所有层（未使用 `--fast`）；两者均通过。匿名读取的版本 / latest 清单相同，包含且仅包含 amd64 / arm64。多架构清单摘要为 `sha256:7e44995fa2ac091e606a8ccea3a854898506d8070c6d54a6e545f8592c97fd78`，每架构摘要和原生验证结果见 [发布记录](releases/0.2.0-preview.1.json)。
+
+默认 `compose.yaml` 已改为直接拉取固定版本，源码构建移至 `compose.build.yaml`；Dockerfile 注入版本与源码提交标签，README 和 Release 提供两个部署文件及启动步骤。语法检查包括 YAML、Python、actionlint 与差异检查；冻结和上游来源校验继续通过。没有部署到用户实体 NAS，也没有新增真实平台账号或长期任务验收；已知 Gopeed race 风险继续保留，故发布为预览版。
