@@ -97,3 +97,5 @@ Impeccable 最终机械检测仅运行一次，返回 1 条 Roboto 常见字体�
 | 真实 NAS / 账号 / 长期任务 | 本轮未部署到 NAS，未扩大此前未验证范围；既有 Gopeed race 风险仍有效 |
 
 本次首个远端运行 [41666449269](https://github.com/xiatian410/YunX-Server/actions/runs/41666449269)：容器构建与只读启动通过；源码任务的 Kotlin 测试通过，但 Go `TestBrowserProxyAndWorker` 在创建浏览器上下文时触发既有 10 秒预算。日志显示该夹具自动选择 `/usr/bin/chromium`（156.0.8078.0），而网页 Playwright 固定使用同机 `/usr/bin/google-chrome`（156.0.8078.79）。仅将 CI test job 的 `YUNX_CHROMIUM` 显式设为与网页测试相同的 Chrome；容器和产品浏览器选择逻辑不变，没有加超时、重试或跳过测试。该环境设置本地连续三次代理/worker 测试通过（0.68 / 0.65 / 0.63 秒），YAML、冻结与差异检查通过。Chromium 内部超时根因仍未确定，不将浏览器选择一致化描述为已修复 Chromium 本身。
+
+最终完整 CI：[41667576058](https://github.com/xiatian410/YunX-Server/actions/runs/41667576058)，提交 `29b8a96`（界面实现为 `6ace605`）。源码与容器两个任务均通过：干净环境重新执行 Kotlin / Go / 10 个浏览器场景、79 文件冻结及 62 文件来源校验，完成 Linux amd64 / arm64 编译、amd64 嵌入网页冒烟，以及非 root / 只读容器启动。arm64 QEMU 冒烟另在本地通过。没有跳过失败测试或增加重试；未部署 NAS、未发布镜像，真实账号与长期任务的未验证范围不变。
