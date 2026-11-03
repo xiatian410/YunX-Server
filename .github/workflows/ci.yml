@@ -9,6 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      # Match the browser used by web/playwright.config.ts instead of selecting
+      # the runner's separate Chromium snapshot before installed stable Chrome.
+      YUNX_CHROMIUM: /usr/bin/google-chrome
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
