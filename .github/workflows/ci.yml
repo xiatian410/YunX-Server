@@ -23,6 +23,14 @@ jobs:
           distribution: temurin
           java-version: '17'
       - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Identify installed browser executables
+        run: |
+          for browser in /usr/bin/chromium /usr/bin/google-chrome; do
+            if test -e "$browser"; then
+              ls -l "$browser"
+              timeout 10 "$browser" --version || true
+            fi
+          done
       - run: make test check
       - run: |
           mkdir -p release

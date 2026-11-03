@@ -26,7 +26,7 @@
 
 > 本项目同样采用 **AGPL-3.0**，参考 [CYQawa/YunX](https://github.com/CYQawa/YunX) 与 [tidain/YunX-Desktop](https://github.com/tidain/YunX-Desktop) 为 NAS 重写服务端和网页，复用原项目平台网络代码及图标。本项目为非官方 NAS 衍生版本。
 
-> **当前为开发初稿。** 常规功能测试通过，但 Gopeed 1.9.3 的并发检测发现数据竞争；真实平台账号、Docker 运行与实体 NAS 尚未验证。请先阅读 [验证记录](docs/validation.md)，不要将本版视为生产稳定版。
+> **当前为开发初稿。** 常规功能测试通过，但 Gopeed 1.9.3 的并发检测发现数据竞争；Linux amd64 容器构建及只读启动已通过 CI，真实平台账号与实体 NAS 尚未验证。请先阅读 [验证记录](docs/validation.md)，不要将本版视为生产稳定版。
 
 ## 简介
 

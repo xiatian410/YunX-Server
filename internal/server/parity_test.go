@@ -83,7 +83,7 @@ func TestBrowserProxyAndWorker(t *testing.T) {
 			script, _ := filepath.Abs("../../provider/browser.mjs")
 			ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 			cmd := exec.CommandContext(ctx, "node", script)
-			cmd.Env = append(os.Environ(), "YUNX_BROWSER_PROXY="+addr, "YUNX_BROWSER_PROXY_TOKEN="+token)
+			cmd.Env = append(os.Environ(), "YUNX_BROWSER_PROXY="+addr, "YUNX_BROWSER_PROXY_TOKEN="+token, "YUNX_BROWSER_DIAGNOSTICS=1")
 			input, _ := json.Marshal(map[string]any{"url": source.URL, "readyCheckJs": "() => !!window.fixture", "extractJs": "() => JSON.stringify(window.fixture)", "timeout": 10000})
 			cmd.Stdin = bytes.NewReader(input)
 			out, e := cmd.CombinedOutput()

@@ -29,7 +29,7 @@
 | Pixiv | PixivParser | 多图 / 原图 | 源码与识别、账号检查错误路径修正；真实平台待验 |
 | GitHub | Go GitHub API | 文件 / 归档 / Release | PAT 私有仓库列表、Release 取链夹具通过；真实私有仓库待验 |
 
-上游固定提交、逐文件修改与哈希见 [provider/UPSTREAM.json](../provider/UPSTREAM.json)。其中 62 个原版源码/测试文件直接包含在仓库，18 个为 NAS 边界、分页、目录、清理、分 P 和错误处理作了适配。
+上游固定提交、逐文件修改与哈希见 [provider/UPSTREAM.json](../provider/UPSTREAM.json)。其中 62 个原版源码/测试文件直接包含在仓库，19 个调整了 NAS 边界、分页、目录、清理、分 P、错误处理或空白格式。
 
 ## 下载执行与 NAS 行为
 
